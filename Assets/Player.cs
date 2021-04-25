@@ -1,20 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     #region Fields
+    Rigidbody2D rb;
+
+
     #region ItayFields
+    [SerializeField]
+    float maxSpeed, acceleration, deceleration, stepHeight, jumpForce, airSpeed;
+    [SerializeField]
+    int jumpNum;
+    bool isMoving = false;
+    Vector2 moveDirection = Vector2.zero;
     #endregion
     #region UrsulaFields
     #endregion
     #endregion
 
+    #region MonoBehaviour Functions
+        private void Start() {
+            rb = GetComponent<Rigidbody2D>();
+        }
+
+        private void Update() {
+            
+        }
+    #endregion
+
     #region  Actions
 
     #region  ItayActions
-    public void OnMove(){  Debug.Log("Move"); //WASD
+
+    private void MovePlayer(){
+
+    }
+    public void OnMove(InputAction.CallbackContext value){  Debug.Log("Move"); //WASD
+        isMoving = !isMoving;
+        
+        Debug.Log(value.ReadValue<Vector2>());
         //TODO: Apply movement - Start on first callback stop on second callback
         //TODO: Adjuststable Accelaration
         //TODO: Max speed
@@ -23,14 +50,14 @@ public class Player : MonoBehaviour
         //TODO: Stick to vertical wall
     
     }
-    public void OnJump(){Debug.Log("Jump"); //Space
+    public void OnJump(InputAction.CallbackContext value){Debug.Log("Jump"); //Space
         //TODO: Apply ascension
         //TODO: Apply forward momentum 
         //TODO: Adjustable Airtime
         //TODO: Adjustable Air Movment
         //TODO: Adjustable Jump Number and check limit
     }
-    public void OnDash(){Debug.Log("Dash"); //Left Shift
+    public void OnDash(InputAction.CallbackContext value){Debug.Log("Dash"); //Left Shift
         //TODO: Figure direction of Dash (right and left only for now)
         //TODO: If hanging from wall dash will go up
         //TODO: Adjustable dash time and speed
