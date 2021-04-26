@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -8,9 +9,16 @@ public class Player : MonoBehaviour
     #region ItayFields
     #endregion
     #region UrsulaFields
+    public PelletController PelletPrefab;
+    public Rigidbody2D rb;
     #endregion
     #endregion
 
+    #region Unity Callbacks
+
+
+
+    #endregion
     #region  Actions
 
     #region  ItayActions
@@ -39,11 +47,36 @@ public class Player : MonoBehaviour
     #endregion
     #region UrsulaFields
     public void OnShoot(){Debug.Log("Shoot"); //Left Mouse Button
+
+        Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+        Vector2 dir = MousePos - (Vector2)transform.position;
+
+        PelletController pellet = Instantiate(PelletPrefab);
+        pellet.transform.position = transform.position;
+
+        pellet.movement = dir.normalized;
+
         //TODO: Locate mouse and shoot in direction
         //TODO: Instantiate and Destantiate Shot
         //TODO: Adjustable Shot Speed
         //TODO: Shot should be self propelling
     }
     #endregion
+
+    public void OnBoost()
+    {
+        Debug.Log("Boost");
+        Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 dir = MousePos - (Vector2)transform.position;
+
+        rb.AddForce(dir.normalized * 4, ForceMode2D.Impulse);
+
+    }
+
+    public void OnBoostAim()
+    {
+        Debug.Log("Aiming");
+    }
     #endregion
 }
