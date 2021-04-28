@@ -27,7 +27,7 @@
                     "id": "d68b6176-d7a7-4d2d-8893-142f920fb613",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=1)"
+                    "interactions": ""
                 },
                 {
                     "name": "Dash",
@@ -43,7 +43,7 @@
                     "id": "4bfe8cbc-f533-42c6-bf6c-9de5c3a78adb",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=1)"
+                    "interactions": ""
                 },
                 {
                     "name": "BoostAim",
@@ -70,7 +70,7 @@
                     "name": "",
                     "id": "1f0d2e85-db3e-4ed5-a3d4-202dea4dc0fc",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": " Keyboard & Mouse",
                     "action": "Shoot",
@@ -147,7 +147,7 @@
                     "name": "",
                     "id": "9eae31a6-5e5d-4533-8be8-312fe3b607e3",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": " Keyboard & Mouse",
                     "action": "Boost",
