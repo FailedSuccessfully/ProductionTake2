@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 1283330848}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -382,6 +382,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PelletPrefab: {fileID: -7466580241484319887, guid: 9ee0c707cb7ffbb41909a53294f5109d, type: 3}
+  rb: {fileID: 1283330845}
+  Aiming: 0
 --- !u!1 &1857975442
 GameObject:
   m_ObjectHideFlags: 0

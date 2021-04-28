@@ -11,12 +11,16 @@ public class Player : MonoBehaviour
     #region UrsulaFields
     public PelletController PelletPrefab;
     public Rigidbody2D rb;
+    public bool Aiming;
     #endregion
     #endregion
 
     #region Unity Callbacks
 
-
+    private void Update()
+    {
+        
+    }
 
     #endregion
     #region  Actions
@@ -67,9 +71,12 @@ public class Player : MonoBehaviour
     public void OnBoost()
     {
         Debug.Log("Boost");
+        Time.timeScale = 1f;
+        Aiming = false;
         Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 dir = MousePos - (Vector2)transform.position;
 
+        rb.velocity = Vector3.zero;
         rb.AddForce(dir.normalized * 4, ForceMode2D.Impulse);
 
     }
@@ -77,6 +84,8 @@ public class Player : MonoBehaviour
     public void OnBoostAim()
     {
         Debug.Log("Aiming");
+        Aiming = true;
+        Time.timeScale = 0.1f;
     }
     #endregion
 }
