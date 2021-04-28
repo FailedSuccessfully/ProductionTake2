@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     int jumpNum;
     bool isMoving = false;
+    float currSpeed = 0;
     Vector2 moveDirection = Vector2.zero;
     #endregion
     #region UrsulaFields
@@ -27,7 +28,13 @@ public class Player : MonoBehaviour
         }
 
         private void Update() {
-            
+            if (isMoving){
+                Accelarate();
+            }
+            else if (currSpeed > 0){
+                    Decelerate();
+            }
+            MovePlayer();
         }
     #endregion
 
@@ -36,20 +43,36 @@ public class Player : MonoBehaviour
     #region  ItayActions
 
     private void MovePlayer(){
+        Vector2 newPos = (Vector2)transform.position + (moveDirection * currSpeed * Time.deltaTime);
+        transform.position = newPos;
 
+        if (currSpeed < 0){
+            moveDirection = Vector2.zero;
+            currSpeed = 0;
+        }
+    }
+    private void Accelarate(){
+        if (currSpeed < maxSpeed){
+            currSpeed += acceleration * Time.deltaTime;
+        }
+    }    
+    private void Decelerate(){
+        currSpeed -= deceleration * Time.deltaTime;
     }
     public void OnMove(InputAction.CallbackContext value){  Debug.Log("Move"); //WASD
-        isMoving = !isMoving;
-        
-        Debug.Log(value.ReadValue<Vector2>());
-        //TODO: Apply movement - Start on first callback stop on second callback
-        //TODO: Adjuststable Accelaration
-        //TODO: Max speed
-        //TODO: Adjustable Decelaration
+        Vector2 dir = value.ReadValue<Vector2>();
+        if (dir != Vector2.zero){
+            moveDirection = dir;
+            isMoving = true;
+        }
+        else {
+            isMoving = false;
+        }
         //TODO: Limit slope height for climb
         //TODO: Stick to vertical wall
     
     }
+    
     public void OnJump(InputAction.CallbackContext value){Debug.Log("Jump"); //Space
         //TODO: Apply ascension
         //TODO: Apply forward momentum 

@@ -11,7 +11,7 @@
                     "id": "b19caf1d-4510-41e6-a0c2-a8c86dad6972",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=1)"
                 },
                 {
                     "name": "Jump",
@@ -77,7 +77,7 @@
                     "id": "8bd805b2-e58e-494c-9380-ad481555c5c2",
                     "path": "2DVector",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(y=0)",
                     "groups": "",
                     "action": "Move",
                     "isComposite": true,
