@@ -156,11 +156,13 @@ public class Player : MonoBehaviour
 
     }
 
-    public void OnBoostAim()
+    public void OnBoostAim(InputAction.CallbackContext value)
     {
+        if (value.performed){
         Debug.Log("Aiming");
         Aiming = true;
         Time.timeScale = 0.1f;
+        }
     }
     #endregion
 }
