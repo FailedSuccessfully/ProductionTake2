@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {x: 0, y: 0}
-  speed: 50
+  speed: 100
 --- !u!58 &2761806674681043189
 CircleCollider2D:
   m_ObjectHideFlags: 0

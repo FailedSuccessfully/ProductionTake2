@@ -70,7 +70,7 @@
                     "name": "",
                     "id": "1f0d2e85-db3e-4ed5-a3d4-202dea4dc0fc",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": " Keyboard & Mouse",
                     "action": "Shoot",
