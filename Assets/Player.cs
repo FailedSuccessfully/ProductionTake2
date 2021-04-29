@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     #endregion
     #region UrsulaFields
     public PelletController PelletPrefab;
+    public bool Aiming;
     #endregion
     #endregion
 
@@ -48,8 +49,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Unity Callbacks
-
-
 
     #endregion
     #region  Actions
@@ -146,6 +145,8 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Boost");
         if (value.performed){
+        Time.timeScale = 1f;
+        Aiming = false;
         Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 dir = MousePos - (Vector2)transform.position;
 
@@ -158,6 +159,8 @@ public class Player : MonoBehaviour
     public void OnBoostAim()
     {
         Debug.Log("Aiming");
+        Aiming = true;
+        Time.timeScale = 0.1f;
     }
     #endregion
 }
