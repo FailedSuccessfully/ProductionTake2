@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
 
 
     #region ItayFields
+    [SerializeReference]
+    public PlayerStats myStats;
+
+
     [SerializeField]
     float maxSpeed, acceleration, deceleration, jumpForce, dashForce, boostForce, dashCooldown;
     int setpAngle;

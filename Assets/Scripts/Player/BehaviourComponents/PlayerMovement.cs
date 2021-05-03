@@ -6,9 +6,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : PlayerComponent
 {
-    float maxSpeed, acceleration, deceleration, currSpeed;
+    float maxSpeed => player.myStats.maxSpeed;
+    float acceleration => player.myStats.acceleration;
+    float deceleration => player.myStats.deceleration;
     Vector2 myDirection;
     Vector2 velocity => rigidbody.velocity;
+    
+
     public PlayerMovement(Player player) : base(player)
     {
         myDirection = Vector2.zero;
@@ -17,9 +21,9 @@ public class PlayerMovement : PlayerComponent
 
     public PlayerMovement(float maxSpeed, float acceleration, float deceleration, Player player) : this(player){
         
-        this.maxSpeed = maxSpeed;
+        /*this.maxSpeed = maxSpeed;
         this.acceleration = acceleration;
-        this.deceleration = deceleration;
+        this.deceleration = deceleration;*/
     }
     public override void AcceptInput(InputAction.CallbackContext value){
             myDirection = value.ReadValue<Vector2>();
