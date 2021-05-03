@@ -38,6 +38,9 @@ public class PlayerMovement : PlayerComponent
             //decelerate
             force += (Vector2.left * (deceleration - velocity.x / maxSpeed) * Mathf.Sign(velocity.x));
         }
+
+        // Scale to mass
+        force *= rigidbody.mass;
         rigidbody.AddForce(force);
     }
 
