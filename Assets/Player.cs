@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     #region Fields
     Rigidbody2D rb;
+    PlayerMovementSimple a;
 
 
     #region ItayFields
@@ -16,9 +18,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     int jumpNum;
     bool isMoving = false;
-    float currSpeed = 0, dashTime = 0;
+    internal float currSpeed = 0, dashTime = 0;
     int currJump = 0;
-    Vector2 moveDirection = Vector2.zero;
+    protected Vector2 moveDirection = Vector2.zero;
     #endregion
     #region UrsulaFields
     public PelletController PelletPrefab;
@@ -29,16 +31,21 @@ public class Player : MonoBehaviour
     #region MonoBehaviour Functions
         private void Start() {
             rb = GetComponent<Rigidbody2D>();
+            
+            a = new PlayerMovementSimple(maxSpeed, acceleration, deceleration, this);
+            //Debug.Log(a.ComponentAction);
         }
 
-        private void Update() {
+        private void FixedUpdate() {
+            a.ComponentAction.Invoke();
+            /*
             if (isMoving){
                 Accelarate();
             }
             else if (currSpeed > 0){
                     Decelerate();
             }
-            MovePlayer();
+            MovePlayer();*/
         }
         private void OnCollisionEnter2D(Collision2D other) {
             currJump = 0;
@@ -75,7 +82,8 @@ public class Player : MonoBehaviour
         }
     }
     public void OnMove(InputAction.CallbackContext value){  Debug.Log("Move"); //WASD
-        Vector2 dir = value.ReadValue<Vector2>();
+        a.AcceptInput(value);
+        /*Vector2 dir = value.ReadValue<Vector2>();
         if (dir == Vector2.zero){
             isMoving = false;
         }
@@ -85,7 +93,8 @@ public class Player : MonoBehaviour
             }
             moveDirection = dir;
             isMoving = true;
-        }
+        }*/
+
         //TODO: Limit slope height for climb
         //TODO: Stick to vertical wall
     
