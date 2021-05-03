@@ -26,10 +26,15 @@ public class Player : MonoBehaviour
     public PelletController PelletPrefab;
     public bool Aiming;
     #endregion
+
+    #region AvrahamFields
+    public bool isGrounded = false;
+    #endregion
+
     #endregion
 
     #region MonoBehaviour Functions
-        private void Start() {
+    private void Start() {
             rb = GetComponent<Rigidbody2D>();
             
             a = new PlayerMovement(maxSpeed, acceleration, deceleration, this);
@@ -47,22 +52,41 @@ public class Player : MonoBehaviour
             }
             MovePlayer();*/
         }
-        private void OnCollisionEnter2D(Collision2D other) {
+		
+            
+
+
+
+         void OnCollisionEnter2D(Collision2D other) {
             currJump = 0;
+        if (other.gameObject.tag == "floor")
+        {
+            isGrounded = true;
+            Debug.Log("isGrounded = True");
+
         }
-        
 
-        
-    #endregion
+    }
+    
+	private void OnCollisionExit2D(Collision2D collision)
+	{
+        if (collision.gameObject.tag == "floor")
+        {
+            isGrounded = false;
+            Debug.Log("isGrounded = False");
+        }
+    }
 
-    #region Unity Callbacks
+	#endregion
 
-    #endregion
-    #region  Actions
+	#region Unity Callbacks
 
-    #region  ItayActions
+	#endregion
+	#region  Actions
 
-    private void MovePlayer(){
+	#region  ItayActions
+
+	private void MovePlayer(){
         Vector2 newPos = (Vector2)transform.position + (moveDirection * currSpeed * Time.deltaTime);
         transform.position = newPos;
     }
@@ -104,6 +128,7 @@ public class Player : MonoBehaviour
         if (value.performed){
         //TODO: Apply ascension
         if (currJump < jumpNum){
+                
             rb.AddForce(Vector2.up * (jumpForce * jumpForce), ForceMode2D.Impulse);
             currJump++;
         }
