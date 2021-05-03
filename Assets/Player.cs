@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     #region Fields
     Rigidbody2D rb;
-    PlayerMovementSimple a;
+    PlayerMovement a;
 
 
     #region ItayFields
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
         private void Start() {
             rb = GetComponent<Rigidbody2D>();
             
-            a = new PlayerMovementSimple(maxSpeed, acceleration, deceleration, this);
+            a = new PlayerMovement(maxSpeed, acceleration, deceleration, this);
             //Debug.Log(a.ComponentAction);
         }
 

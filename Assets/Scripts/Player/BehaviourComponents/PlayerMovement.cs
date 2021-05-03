@@ -12,7 +12,7 @@ public class PlayerMovement : PlayerComponent
     public PlayerMovement(Player player) : base(player)
     {
         myDirection = Vector2.zero;
-        ComponentAction = Move;
+        ComponentAction = ChangeVelocity;
     }
 
     public PlayerMovement(float maxSpeed, float acceleration, float deceleration, Player player) : this(player){
@@ -21,60 +21,25 @@ public class PlayerMovement : PlayerComponent
         this.acceleration = acceleration;
         this.deceleration = deceleration;
     }
-
-
-    public void Move(){
-        if (myDirection != Vector2.zero){
-            Vector2 newPos = (Vector2)rigidbody.position + (myDirection * currSpeed * Time.deltaTime);
-            rigidbody.MovePosition(newPos);
-        }
-        Debug.Log(velocity);
-        Debug.Log(rigidbody.velocity);
-
-        myDirection = player.currSpeed < 0 ? Vector2.zero : myDirection;  
+    public override void AcceptInput(InputAction.CallbackContext value){
+            myDirection = value.ReadValue<Vector2>();
+            Debug.Log($"phase: {value.phase} direction: {myDirection}");
     }
-
-    public override void AcceptInput(InputAction.CallbackContext value)
-    {
-        Vector2 direction = value.ReadValue<Vector2>();
-            Debug.Log($"phase: {value.phase} input: {direction}");
-        if (value.canceled){
-            ComponentAction -= Acceleration; 
-            ComponentAction += Deceleration;           
-        }
-        else {
-            ComponentAction -= Deceleration;
-            ComponentAction += Acceleration;
-            Debug.Log(currSpeed);
-            //currSpeed *= (Mathf.Sign(direction.x * myDirection.x));
-            Debug.Log(currSpeed);
-            myDirection = direction;
-        }
-
-
-
-        // if direction changed
-        /*int a = Math.Sign(((myDirection * direction)).x);
-        if (a <= 0) {
-            myDirection = direction;
-            ComponentAction += Deceleration;
-            ComponentAction -= Acceleration;
-            currSpeed *= a;
-        }*/
-    }
-
-    private void Acceleration(){
-        float velocityX = velocity.x;
-        if (velocityX < maxSpeed){
-            velocityX += acceleration * Time.deltaTime;
+    void ChangeVelocity() {
+        Vector2 force = Vector2.zero;
+        //compare movement direction
+        // if velocity matches direction
+        if ( Math.Sign(myDirection.x) == Math.Sign(velocity.x)){
+            //accelerate
+            if (Mathf.Abs(velocity.x) < maxSpeed)
+                force += (myDirection * (acceleration + velocity.x / maxSpeed));
         }
         else{
-            velocityX -= acceleration * Time.deltaTime;
+            //decelerate
+            force += (Vector2.left * (deceleration - velocity.x / maxSpeed) * Mathf.Sign(velocity.x));
         }
-
-        velocity.Set(velocityX, velocity.y);    
+        rigidbody.AddForce(force);
     }
-    private void Deceleration(){
-        currSpeed -= deceleration * Time.deltaTime;
-}
+
+
 }
