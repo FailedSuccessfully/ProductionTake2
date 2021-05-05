@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     #region Fields
     Rigidbody2D rb;
     PlayerMovement a;
-
+    PhysicsMaterial2D pm;
 
     #region ItayFields
     [SerializeField]
@@ -25,14 +25,16 @@ public class Player : MonoBehaviour
     #region UrsulaFields
     public PelletController PelletPrefab;
     public bool Aiming;
+    public bool IsTouchingFloor, IsTouchingWall;
+    public Vector2 WallVector;
     #endregion
     #endregion
 
     #region MonoBehaviour Functions
         private void Start() {
             rb = GetComponent<Rigidbody2D>();
-            
-            a = new PlayerMovement(maxSpeed, acceleration, deceleration, this);
+            pm = GetComponent<BoxCollider2D>().sharedMaterial;
+        a = new PlayerMovement(maxSpeed, acceleration, deceleration, this);
             //Debug.Log(a.ComponentAction);
         }
 
@@ -47,12 +49,37 @@ public class Player : MonoBehaviour
             }
             MovePlayer();*/
         }
-        private void OnCollisionEnter2D(Collision2D other) {
-            currJump = 0;
+    
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.collider.tag == "Floor")
+        {
+        currJump = 0;
+            IsTouchingFloor = true;
         }
-        
 
-        
+        else if (other.collider.tag == "Wall")
+        {
+            IsTouchingWall = true;
+            pm.friction = 0.85f;
+
+            WallVector = new Vector2(transform.position.x - other.transform.position.x, 0).normalized;
+
+            //rb.velocity = Vector3.zero;
+            //rb.gravityScale = 2f;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Wall")
+        {
+            WallVector = Vector2.zero;
+            IsTouchingWall = false;
+            pm.friction = 0.3f;
+        }
+    }
+
     #endregion
 
     #region Unity Callbacks
@@ -104,8 +131,12 @@ public class Player : MonoBehaviour
         if (value.performed){
         //TODO: Apply ascension
         if (currJump < jumpNum){
-            rb.AddForce(Vector2.up * (jumpForce * jumpForce), ForceMode2D.Impulse);
+                Vector2 dir = Vector2.up + WallVector* 2;
+
+
+                rb.AddForce(dir * (jumpForce * jumpForce), ForceMode2D.Impulse);
             currJump++;
+                 
         }
         }
         Debug.Log(currJump);
