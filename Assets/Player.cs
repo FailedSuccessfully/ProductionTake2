@@ -41,14 +41,19 @@ public class Player : MonoBehaviour
     #region MonoBehaviour Functions
     private void Start() {
             rb = GetComponent<Rigidbody2D>();
+            rb.gravityScale = myStats.playerGravity;
             
             a = new PlayerMovement(this);
             b = new PlayerJump(this);
             //Debug.Log(a.ComponentAction);
+
+            var d = GetComponent<PlayerInput>();
+            Debug.Log(d.actions.actionMaps[0].actions[0].name);
         }
 
         private void FixedUpdate() {
             a.ComponentAction.Invoke();
+            b.ComponentAction?.Invoke();
         }
 		
             
