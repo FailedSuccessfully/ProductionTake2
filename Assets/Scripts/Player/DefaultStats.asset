@@ -15,8 +15,9 @@ MonoBehaviour:
   maxSpeed: 50
   acceleration: 200
   deceleration: 60
-  jumpForce: 4
+  jumpForce: 7
   dashForce: 70
   boostForce: 70
   dashCooldown: 1
-  jumpNum: 1
+  jumpNum: 31
+  playerGravity: 10
