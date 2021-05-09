@@ -18,13 +18,6 @@ public class PlayerMovement : PlayerComponent
         myDirection = Vector2.zero;
         ComponentAction = ChangeVelocity;
     }
-
-    public PlayerMovement(float maxSpeed, float acceleration, float deceleration, Player player) : this(player){
-        
-        /*this.maxSpeed = maxSpeed;
-        this.acceleration = acceleration;
-        this.deceleration = deceleration;*/
-    }
     public override void AcceptInput(InputAction.CallbackContext value){
             myDirection = value.ReadValue<Vector2>();
             Debug.Log($"phase: {value.phase} direction: {myDirection}");

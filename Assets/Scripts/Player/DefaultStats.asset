@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DefaultStats
   m_EditorClassIdentifier: 
   maxSpeed: 50
-  acceleration: 20
+  acceleration: 200
   deceleration: 60
   jumpForce: 4
   dashForce: 70
   boostForce: 70
   dashCooldown: 1
-  jumpNum: 3
+  jumpNum: 1

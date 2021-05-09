@@ -18,7 +18,7 @@ public abstract class PlayerComponent : BehaviourComponent
     protected Rigidbody2D rigidbody;
     public virtual Action ComponentAction {  get; protected set; }
 
-    public abstract void AcceptInput(InputAction.CallbackContext input);
+    public abstract void AcceptInput(InputAction.CallbackContext value);
     
     
 }
