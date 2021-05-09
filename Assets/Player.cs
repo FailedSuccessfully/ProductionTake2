@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     #region Fields
     Rigidbody2D rb;
     PlayerMovement a;
+    PlayerJump b;
 
 
     #region ItayFields
@@ -41,20 +42,13 @@ public class Player : MonoBehaviour
     private void Start() {
             rb = GetComponent<Rigidbody2D>();
             
-            a = new PlayerMovement(maxSpeed, acceleration, deceleration, this);
+            a = new PlayerMovement(this);
+            b = new PlayerJump(this);
             //Debug.Log(a.ComponentAction);
         }
 
         private void FixedUpdate() {
             a.ComponentAction.Invoke();
-            /*
-            if (isMoving){
-                Accelarate();
-            }
-            else if (currSpeed > 0){
-                    Decelerate();
-            }
-            MovePlayer();*/
         }
 		
             
@@ -90,46 +84,10 @@ public class Player : MonoBehaviour
 
 	#region  ItayActions
 
-	private void MovePlayer(){
-        Vector2 newPos = (Vector2)transform.position + (moveDirection * currSpeed * Time.deltaTime);
-        transform.position = newPos;
-    }
-    private void Accelarate(){
-        if (currSpeed < maxSpeed){
-            currSpeed += acceleration * Time.deltaTime;
-        }
-        else{
-            currSpeed -= acceleration * Time.deltaTime;
-        }
-    }    
-    private void Decelerate(){
-        currSpeed -= deceleration * Time.deltaTime;
-
-        if (moveDirection == Vector2.zero && Mathf.Abs(currSpeed) < 0.05f){
-            currSpeed = 0f;
-        }
-    }
-    public void OnMove(InputAction.CallbackContext value){  Debug.Log("Move"); //WASD
-        a.AcceptInput(value);
-        /*Vector2 dir = value.ReadValue<Vector2>();
-        if (dir == Vector2.zero){
-            isMoving = false;
-        }
-        else {
-            if (dir != moveDirection){
-                currSpeed *= -1;
-            }
-            moveDirection = dir;
-            isMoving = true;
-        }*/
-
-        //TODO: Limit slope height for climb
-        //TODO: Stick to vertical wall
-    
-    }
-    
+    public void OnMove(InputAction.CallbackContext value) => a.AcceptInput(value);
     public void OnJump(InputAction.CallbackContext value){Debug.Log("Jump"); //Space
-        if (value.performed){
+            b.AcceptInput(value);
+        /*if (value.performed){
         //TODO: Apply ascension
         if (currJump < jumpNum){
                 
@@ -137,11 +95,7 @@ public class Player : MonoBehaviour
             currJump++;
         }
         }
-        Debug.Log(currJump);
-        //TODO: Apply forward momentum 
-        //TODO: Adjustable Airtime
-        //TODO: Adjustable Air Movment
-        //TODO: Adjustable Jump Number and check limit
+        Debug.Log(currJump);*/
     }
     public void OnDash(InputAction.CallbackContext value){Debug.Log("Dash"); //Left Shift
         //TODO: Figure direction of Dash (right and left only for now)
@@ -153,9 +107,6 @@ public class Player : MonoBehaviour
             }
             dashTime = now;
         }
-        //TODO: If hanging from wall dash will go up
-        //TODO: Adjustable dash time and speed
-        //TODO: Limit Midair Dashes
     }
     #endregion
     #region UrsulaFields
@@ -171,11 +122,6 @@ public class Player : MonoBehaviour
 
         pellet.movement = dir.normalized;
         }
-
-        //TODO: Locate mouse and shoot in direction
-        //TODO: Instantiate and Destantiate Shot
-        //TODO: Adjustable Shot Speed
-        //TODO: Shot should be self propelling
     }
     #endregion
 
