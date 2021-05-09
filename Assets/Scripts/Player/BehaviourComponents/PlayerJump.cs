@@ -17,6 +17,7 @@ public class PlayerJump : PlayerComponent
     public override void AcceptInput(InputAction.CallbackContext value)
     {   
         if (currJump < jumpNum){
+            // adds a jump call to be invoked on fixed update
             this.ComponentAction += Jump;
             currJump++;
         }
@@ -24,12 +25,14 @@ public class PlayerJump : PlayerComponent
 
     void Jump() {
         rigidbody.AddForce(Vector2.up * Mathf.Pow(jumpForce, 2) * rigidbody.mass, ForceMode2D.Impulse);
+        // after being called will remove self from component action
         ComponentAction -= Jump;
     }
 
     void ResetJumps() => currJump = 0;
 
     void CheckGrounded() {
+        // Check against ground mask
         if (rigidbody.IsTouchingLayers(LayerMask.GetMask("Ground"))){
             ResetJumps();
         }

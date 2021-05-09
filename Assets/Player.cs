@@ -47,38 +47,13 @@ public class Player : MonoBehaviour
             b = new PlayerJump(this);
             //Debug.Log(a.ComponentAction);
 
-            var d = GetComponent<PlayerInput>();
-            Debug.Log(d.actions.actionMaps[0].actions[0].name);
         }
 
         private void FixedUpdate() {
-            a.ComponentAction.Invoke();
+            // ComponentAction?.Invoke() will only invoke if not null;
+            a.ComponentAction?.Invoke();
             b.ComponentAction?.Invoke();
         }
-		
-            
-
-
-
-         void OnCollisionEnter2D(Collision2D other) {
-            currJump = 0;
-        if (other.gameObject.tag == "floor")
-        {
-            isGrounded = true;
-            Debug.Log("isGrounded = True");
-
-        }
-
-    }
-    
-	private void OnCollisionExit2D(Collision2D collision)
-	{
-        if (collision.gameObject.tag == "floor")
-        {
-            isGrounded = false;
-            Debug.Log("isGrounded = False");
-        }
-    }
 
 	#endregion
 
@@ -90,18 +65,7 @@ public class Player : MonoBehaviour
 	#region  ItayActions
 
     public void OnMove(InputAction.CallbackContext value) => a.AcceptInput(value);
-    public void OnJump(InputAction.CallbackContext value){Debug.Log("Jump"); //Space
-            b.AcceptInput(value);
-        /*if (value.performed){
-        //TODO: Apply ascension
-        if (currJump < jumpNum){
-                
-            rb.AddForce(Vector2.up * (jumpForce * jumpForce), ForceMode2D.Impulse);
-            currJump++;
-        }
-        }
-        Debug.Log(currJump);*/
-    }
+    public void OnJump(InputAction.CallbackContext value) => b.AcceptInput(value);
     public void OnDash(InputAction.CallbackContext value){Debug.Log("Dash"); //Left Shift
         //TODO: Figure direction of Dash (right and left only for now)
         float now = Time.time;

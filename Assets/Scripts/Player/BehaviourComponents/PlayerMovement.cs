@@ -18,12 +18,11 @@ public class PlayerMovement : PlayerComponent
         myDirection = Vector2.zero;
         ComponentAction = ChangeVelocity;
     }
-    public override void AcceptInput(InputAction.CallbackContext value){
-            myDirection = value.ReadValue<Vector2>();
-            Debug.Log($"phase: {value.phase} direction: {myDirection}");
-    }
+    public override void AcceptInput(InputAction.CallbackContext value) => myDirection = value.ReadValue<Vector2>();
+
     void ChangeVelocity() {
         Vector2 force = Vector2.zero;
+        
         //compare movement direction
         // if velocity matches direction
         if ( Math.Sign(myDirection.x) == Math.Sign(velocity.x)){
