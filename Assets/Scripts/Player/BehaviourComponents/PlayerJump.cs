@@ -8,9 +8,9 @@ public class PlayerJump : PlayerComponent
     int jumpNum => player.myStats.jumpNum;
     float jumpForce => player.myStats.jumpForce;
     int currJump;
-    bool isAirborne;
     public PlayerJump(Player player) : base(player)
     {
+        this.ComponentAction += CheckGrounded;
         currJump = 0;
     }
 
@@ -29,7 +29,10 @@ public class PlayerJump : PlayerComponent
 
     void ResetJumps() => currJump = 0;
 
-    // on press mark for jump
-    // in fixed update check if jumped then apply
+    void CheckGrounded() {
+        if (rigidbody.IsTouchingLayers(LayerMask.GetMask("Ground"))){
+            ResetJumps();
+        }
+    }
 
 }
