@@ -18,14 +18,9 @@ public class Player : MonoBehaviour
 
 
     [SerializeField]
-    float maxSpeed, acceleration, deceleration, jumpForce, dashForce, boostForce, dashCooldown;
-    int setpAngle;
-    [SerializeField]
-    int jumpNum;
-    bool isMoving = false;
+    float dashForce, boostForce, dashCooldown;
     internal float currSpeed = 0, dashTime = 0;
     int currJump = 0;
-    protected Vector2 moveDirection = Vector2.zero;
     #endregion
     #region UrsulaFields
     public PelletController PelletPrefab;
@@ -45,7 +40,6 @@ public class Player : MonoBehaviour
             
             a = new PlayerMovement(this);
             b = new PlayerJump(this);
-            //Debug.Log(a.ComponentAction);
 
         }
 
