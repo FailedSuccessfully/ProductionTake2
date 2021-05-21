@@ -9,14 +9,14 @@ public class PlayerMovement : PlayerComponent
     float maxSpeed => player.myStats.maxSpeed;
     float acceleration => player.myStats.acceleration;
     float deceleration => player.myStats.deceleration;
-    Vector2 myDirection;
+    public Vector2 myDirection {get; private set;}
     Vector2 velocity => rigidbody.velocity;
     
 
     public PlayerMovement(Player player) : base(player)
     {
         myDirection = Vector2.zero;
-        ComponentAction = ChangeVelocity;
+        ComponentAction += ChangeVelocity;
     }
     public override void AcceptInput(InputAction.CallbackContext value) => myDirection = value.ReadValue<Vector2>();
 
@@ -39,6 +39,5 @@ public class PlayerMovement : PlayerComponent
         force *= rigidbody.mass;
         rigidbody.AddForce(force);
     }
-
 
 }

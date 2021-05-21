@@ -1,20 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
     #region Fields
     Rigidbody2D rb;
-    PlayerMovement a;
-    PlayerJump b;
+    Dictionary<Type, PlayerComponent> compDict = new Dictionary<Type, PlayerComponent>();
+    InputActionMap inputs;
 
 
     #region ItayFields
     [SerializeReference]
     public PlayerStats myStats;
+    protected internal Vector2 direction => ((PlayerMovement)compDict[typeof(PlayerMovement)]).myDirection;
 
 
     [SerializeField]
@@ -36,17 +38,19 @@ public class Player : MonoBehaviour
     #region MonoBehaviour Functions
     private void Start() {
             rb = GetComponent<Rigidbody2D>();
+            inputs = GetComponent<PlayerInput>().currentActionMap;
             rb.gravityScale = myStats.playerGravity;
-            
-            a = new PlayerMovement(this);
-            b = new PlayerJump(this);
+            compDict.Add(typeof(PlayerMovement), new PlayerMovement(this));
+            compDict.Add(typeof(PlayerJump), new PlayerJump(this));
+            compDict.Add(typeof(PlayerDash), new PlayerDash(this));
 
         }
 
         private void FixedUpdate() {
             // ComponentAction?.Invoke() will only invoke if not null;
-            a.ComponentAction?.Invoke();
-            b.ComponentAction?.Invoke();
+            foreach(PlayerComponent component in compDict.Values){
+                component.ComponentAction?.Invoke();
+            }
         }
 
 	#endregion
@@ -57,10 +61,26 @@ public class Player : MonoBehaviour
 	#region  Actions
 
 	#region  ItayActions
+    internal IEnumerator BlockInputForSeconds(String actionName, float time = 0.5f){
+        InputAction action = inputs.FindAction(actionName);
+        action.Disable();
+        Debug.Log($"action {action.name} is disabled");
+        yield return new WaitForSeconds(time);
+        action.Enable();
+        Debug.Log($"action {action.name} is enabled");
+        yield return null;
+    }
 
-    public void OnMove(InputAction.CallbackContext value) => a.AcceptInput(value);
-    public void OnJump(InputAction.CallbackContext value) => b.AcceptInput(value);
-    public void OnDash(InputAction.CallbackContext value){Debug.Log("Dash"); //Left Shift
+    internal IEnumerator BlockAllInputsForSeconds(float time = 0.5f) {
+        inputs.Disable();
+        yield return new WaitForSeconds(time);
+        inputs.Enable();
+        yield return null;
+    }
+    public void OnMove(InputAction.CallbackContext value) => compDict[typeof(PlayerMovement)].AcceptInput(value);
+    public void OnJump(InputAction.CallbackContext value) => compDict[typeof(PlayerJump)].AcceptInput(value);
+    public void OnDash(InputAction.CallbackContext value){ //Left Shift
+        compDict[typeof(PlayerDash)].AcceptInput(value);
         //TODO: Figure direction of Dash (right and left only for now)
         float now = Time.time;
         if (now - dashTime >= dashCooldown){
