@@ -8,18 +8,19 @@ public class HorizontalMovement : MovementTypeInterface
 
     private void Start()
     {
-        direction = Vector2.left;
+        direction = Vector2.right;
     }
 
     private void Update()
     {
         Move();
 
-        if (mainController.SeePlayerDir != Vector2.zero)
+        if (mainController.SeePlayerDir != Vector2.zero && new Vector2(mainController.SeePlayerDir.x, 0).normalized != direction)
         {
             Vector2 flatDir = new Vector2(mainController.SeePlayerDir.x, 0).normalized;
 
             direction = flatDir;
+            flip();
         }
     }
 
@@ -33,6 +34,20 @@ public class HorizontalMovement : MovementTypeInterface
             {
                 direction = Vector2.left;
             }
+    }
+
+    public void flip()
+    {
+        if (direction == Vector2.left)
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            mainController.isFacingLeft = true;
+        }
+        else
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            mainController.isFacingLeft = false;
+        }
     }
 
     public override void Move()

@@ -50,14 +50,19 @@ public class Player : MonoBehaviour
             b.ComponentAction?.Invoke();
         }
 
-	#endregion
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
 
-	#region Unity Callbacks
+    #endregion
 
-	#endregion
-	#region  Actions
+    #region Unity Callbacks
 
-	#region  ItayActions
+    #endregion
+    #region  Actions
+
+    #region  ItayActions
 
     public void OnMove(InputAction.CallbackContext value) => a.AcceptInput(value);
     public void OnJump(InputAction.CallbackContext value) => b.AcceptInput(value);

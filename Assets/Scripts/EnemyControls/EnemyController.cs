@@ -12,6 +12,7 @@ public class EnemyController : CharacterController
     public Vector2 SeePlayerDir;
 
     public LOSController enemyLOS;
+    public AttackController enemyAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -30,13 +31,26 @@ public class EnemyController : CharacterController
 
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "floor")
+        {
+            isTouchingFloor = true;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Attack")
         {
-
+            if (collision.GetComponentInParent<AttackController>().getParentTag() == "Player")
+            {
+                GotHitEvent.Invoke();
+            }
+        }
+        if (collision.tag == "Player")
+        {
+            enemyAttack.Attack();
         }
     }
 }

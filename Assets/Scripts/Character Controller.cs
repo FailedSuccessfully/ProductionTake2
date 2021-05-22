@@ -110,6 +110,43 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    #region controller management
+    public void DisableAllControllers()
+    {
+        foreach (var item in GetComponents<BaseController>())
+        {
+            item.enabled = false;
+        }
+    }
+
+    public void EnableAllControllers()
+    {
+        foreach (var item in GetComponents<BaseController>())
+        {
+            item.enabled = true;
+        }
+    }
+
+    public void DisableController(BaseController controller)
+    {
+        controller.enabled = false;
+    }
+
+    public void EnableController(BaseController controller)
+    {
+        controller.enabled = true;
+    }
+    #endregion
+
+    public Vector2 returnForward()
+    {
+        if (isFacingLeft)
+        {
+            return Vector2.left;
+        }
+        return Vector2.right;
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.collider.tag == "Floor" && CheckDownCollision())
