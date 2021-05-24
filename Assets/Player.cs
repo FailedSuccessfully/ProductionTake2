@@ -88,7 +88,6 @@ public class Player : MonoBehaviour
 
     #endregion
 
-	#endregion
 
 	#region Unity Callbacks
 
