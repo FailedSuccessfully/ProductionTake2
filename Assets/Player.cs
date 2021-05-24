@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     Dictionary<Type, PlayerComponent> compDict = new Dictionary<Type, PlayerComponent>();
     InputActionMap inputs;
-
+    PhysicsMaterial2D pm;
 
     #region ItayFields
     [SerializeReference]
@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     #region UrsulaFields
     public PelletController PelletPrefab;
     public bool Aiming;
+    public bool IsTouchingFloor, IsTouchingWall;
+    public Vector2 WallVector;
     #endregion
 
     #region AvrahamFields
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
             compDict.Add(typeof(PlayerJump), new PlayerJump(this));
             compDict.Add(typeof(PlayerDash), new PlayerDash(this));
 
+            pm = GetComponent<BoxCollider2D>().sharedMaterial;
         }
 
         private void FixedUpdate() {
@@ -52,6 +55,38 @@ public class Player : MonoBehaviour
                 component.ComponentAction?.Invoke();
             }
         }
+    
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.collider.tag == "Floor")
+        {
+        currJump = 0;
+            IsTouchingFloor = true;
+        }
+
+        else if (other.collider.tag == "Wall")
+        {
+            IsTouchingWall = true;
+            pm.friction = 0.85f;
+
+            WallVector = new Vector2(transform.position.x - other.transform.position.x, 0).normalized;
+
+            //rb.velocity = Vector3.zero;
+            //rb.gravityScale = 2f;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Wall")
+        {
+            WallVector = Vector2.zero;
+            IsTouchingWall = false;
+            pm.friction = 0.3f;
+        }
+    }
+
+    #endregion
 
 	#endregion
 

@@ -4,15 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - floor
+  - Wall
+  - Floor
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Wall
+  - 
   - 
   - 
   - 
