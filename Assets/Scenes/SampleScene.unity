@@ -716,18 +716,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e1db85b52579b4a96f76b33c776aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 50
-  acceleration: 20
-  deceleration: 60
-  jumpForce: 6
+  myStats: {fileID: 11400000, guid: 3ea7b7f00e1144f4b938df84c7458cab, type: 2}
   dashForce: 70
   boostForce: 10
   dashCooldown: 1
-  jumpNum: 3
   PelletPrefab: {fileID: -7466580241484319887, guid: 9ee0c707cb7ffbb41909a53294f5109d, type: 3}
   Aiming: 0
   IsTouchingFloor: 0
   IsTouchingWall: 0
+  WallVector: {x: 0, y: 0}
+  isGrounded: 0
 --- !u!1 &1321352184
 GameObject:
   m_ObjectHideFlags: 0

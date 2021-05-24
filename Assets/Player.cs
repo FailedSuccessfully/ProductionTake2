@@ -93,8 +93,6 @@ public class Player : MonoBehaviour
 
 	#endregion
 	#region  Actions
-
-	#region  ItayActions
     internal IEnumerator BlockInputForSeconds(String actionName, float time = 0.5f){
         InputAction action = inputs.FindAction(actionName);
         action.Disable();
@@ -111,6 +109,8 @@ public class Player : MonoBehaviour
         inputs.Enable();
         yield return null;
     }
+
+	#region  ItayActions
     public void OnMove(InputAction.CallbackContext value) => compDict[typeof(PlayerMovement)].AcceptInput(value);
     public void OnJump(InputAction.CallbackContext value) => compDict[typeof(PlayerJump)].AcceptInput(value);
     public void OnDash(InputAction.CallbackContext value){ //Left Shift

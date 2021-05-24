@@ -19,5 +19,6 @@ MonoBehaviour:
   dashForce: 70
   boostForce: 70
   dashCooldown: 1
+  dashDuration: 0.2
   jumpNum: 2
   playerGravity: 10
