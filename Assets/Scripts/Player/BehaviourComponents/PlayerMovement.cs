@@ -18,7 +18,12 @@ public class PlayerMovement : PlayerComponent
         myDirection = Vector2.zero;
         ComponentAction += ChangeVelocity;
     }
-    public override void AcceptInput(InputAction.CallbackContext value) => myDirection = value.ReadValue<Vector2>();
+    public override void AcceptInput(InputAction.CallbackContext value){
+        myDirection = value.ReadValue<Vector2>().normalized;
+        if (myDirection.x != 0f){
+            player.lastDirectionalInput = myDirection;
+        }
+    }
 
     void ChangeVelocity() {
         Vector2 force = Vector2.zero;

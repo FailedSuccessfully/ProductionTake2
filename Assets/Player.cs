@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeReference]
     public PlayerStats myStats;
     protected internal Vector2 direction => ((PlayerMovement)compDict[typeof(PlayerMovement)]).myDirection;
+    protected internal Vector2 lastDirectionalInput;
 
 
     [SerializeField]
@@ -90,26 +91,29 @@ public class Player : MonoBehaviour
 	#region  Actions
     internal IEnumerator BlockInputForSeconds(String actionName, float time = 0.5f){
         InputAction action = inputs.FindAction(actionName);
-        action.Disable();
+        action?.Disable();
         Debug.Log($"action {action.name} is disabled");
         yield return new WaitForSeconds(time);
-        action.Enable();
+        action?.Enable();
         Debug.Log($"action {action.name} is enabled");
         yield return null;
     }
 
     internal IEnumerator BlockAllInputsForSeconds(float time = 0.5f) {
         inputs.Disable();
+        Debug.Log($"inputs disabled");
         yield return new WaitForSeconds(time);
         inputs.Enable();
+        Debug.Log($"inputs enabled");
         yield return null;
     }
 
 	#region  ItayActions
     public void OnMove(InputAction.CallbackContext value) => compDict[typeof(PlayerMovement)].AcceptInput(value);
     public void OnJump(InputAction.CallbackContext value) => compDict[typeof(PlayerJump)].AcceptInput(value);
-    public void OnDash(InputAction.CallbackContext value){ //Left Shift
-        compDict[typeof(PlayerDash)].AcceptInput(value);
+    public void OnDash(InputAction.CallbackContext value) => compDict[typeof(PlayerDash)].AcceptInput(value);
+    /*{ //Left Shift
+        
         //TODO: Figure direction of Dash (right and left only for now)
         float now = Time.time;
         if (now - dashTime >= dashCooldown){
@@ -119,7 +123,7 @@ public class Player : MonoBehaviour
             }
             dashTime = now;
         }
-    }
+    }*/
     #endregion
     #region UrsulaFields
     public void OnShoot(InputAction.CallbackContext value){Debug.Log("Shoot"); //Left Mouse Button

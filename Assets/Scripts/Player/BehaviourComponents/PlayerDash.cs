@@ -29,10 +29,21 @@ public class PlayerDash : PlayerComponent
     }
 
     void ApplyDash() {
-        Vector2 force = player.direction * dashForce;
-        //TODO: add force
-        //TODO: freeze y axis
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.gravityScale = 0f;
+        ComponentAction += Dash;
         player.StartCoroutine(player.BlockAllInputsForSeconds(dashDuration));
+    }
+
+    void Dash(){
+        Debug.Log($"dashing {Time.fixedTime - dashTime}");
+        float dir = player.direction.x == 0f ? player.lastDirectionalInput.x : player.direction.x;
+        Vector2 pos = new Vector2(rigidbody.position.x + dir * dashForce * Time.fixedDeltaTime, rigidbody.position.y);
+        rigidbody.MovePosition(pos);
+        if (Time.fixedTime - dashTime >= dashDuration){
+        rigidbody.gravityScale = player.myStats.playerGravity;
+            ComponentAction -= Dash;
+        }
     }
 
 

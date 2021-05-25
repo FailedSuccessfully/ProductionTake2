@@ -16,7 +16,7 @@ MonoBehaviour:
   acceleration: 200
   deceleration: 60
   jumpForce: 7
-  dashForce: 70
+  dashForce: 700
   boostForce: 70
   dashCooldown: 1
   dashDuration: 0.2
