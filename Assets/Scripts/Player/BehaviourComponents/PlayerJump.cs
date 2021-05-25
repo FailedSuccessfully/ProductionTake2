@@ -15,8 +15,8 @@ public class PlayerJump : PlayerComponent
     }
 
     public override void AcceptInput(InputAction.CallbackContext value)
-    {   Debug.Log("jump");
-        if (currJump < jumpNum){
+    {   
+        if (value.performed && currJump <= jumpNum){
             // adds a jump call to be invoked on fixed update
             this.ComponentAction += Jump;
             currJump++;
@@ -24,6 +24,11 @@ public class PlayerJump : PlayerComponent
     }
 
     void Jump() {
+        
+        // stop vertical momentum
+        rigidbody.constraints = rigidbody.constraints | RigidbodyConstraints2D.FreezePositionY;
+        rigidbody.constraints = rigidbody.constraints ^ RigidbodyConstraints2D.FreezePositionY;
+
         rigidbody.AddForce(Vector2.up * Mathf.Pow(jumpForce, 2) * rigidbody.mass, ForceMode2D.Impulse);
         // after being called will remove self from component action
         ComponentAction -= Jump;

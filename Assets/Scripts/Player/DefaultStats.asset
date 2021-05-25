@@ -15,7 +15,7 @@ MonoBehaviour:
   maxSpeed: 50
   acceleration: 200
   deceleration: 60
-  jumpForce: 7
+  jumpForce: 10
   dashForce: 700
   boostForce: 70
   dashCooldown: 1

@@ -21,8 +21,8 @@ public class Player : MonoBehaviour
 
 
     [SerializeField]
-    float dashForce, boostForce, dashCooldown;
-    internal float currSpeed = 0, dashTime = 0;
+    float  boostForce;
+    internal float currSpeed = 0;
     int currJump = 0;
     #endregion
     #region UrsulaFields
