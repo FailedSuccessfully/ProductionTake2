@@ -19,7 +19,9 @@ public class PlayerDash : PlayerComponent
     }
     public override void AcceptInput(InputAction.CallbackContext value) {
         float now = Time.fixedTime;
+        // check to see if dash is out of cooldown
         if (value.performed && now - dashTime >= dashCooldown) {
+            dashTime = now;
             ApplyDash();
             Debug.Log("i'm called");
         }
@@ -28,10 +30,8 @@ public class PlayerDash : PlayerComponent
 
     void ApplyDash() {
         Vector2 force = player.direction * dashForce;
-        DisableMove();
-    }
-
-    void DisableMove(){
+        //TODO: add force
+        //TODO: freeze y axis
         player.StartCoroutine(player.BlockAllInputsForSeconds(dashDuration));
     }
 

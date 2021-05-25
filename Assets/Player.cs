@@ -58,13 +58,8 @@ public class Player : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.tag == "Floor")
-        {
-        currJump = 0;
-            IsTouchingFloor = true;
-        }
 
-        else if (other.collider.tag == "Wall")
+        if (other.collider.tag == "Wall")
         {
             IsTouchingWall = true;
             pm.friction = 0.85f;
