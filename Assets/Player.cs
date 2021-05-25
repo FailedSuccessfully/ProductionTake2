@@ -39,13 +39,15 @@ public class Player : MonoBehaviour
     #endregion
 
     #region MonoBehaviour Functions
+    private void Awake(){
+            compDict.Add(typeof(PlayerMovement), new PlayerMovement(this));
+            compDict.Add(typeof(PlayerJump), new PlayerJump(this));
+            compDict.Add(typeof(PlayerDash), new PlayerDash(this));
+    }
     private void Start() {
             rb = GetComponent<Rigidbody2D>();
             inputs = GetComponent<PlayerInput>().currentActionMap;
             rb.gravityScale = myStats.playerGravity;
-            compDict.Add(typeof(PlayerMovement), new PlayerMovement(this));
-            compDict.Add(typeof(PlayerJump), new PlayerJump(this));
-            compDict.Add(typeof(PlayerDash), new PlayerDash(this));
 
             pm = GetComponent<BoxCollider2D>().sharedMaterial;
         }
@@ -112,18 +114,6 @@ public class Player : MonoBehaviour
     public void OnMove(InputAction.CallbackContext value) => compDict[typeof(PlayerMovement)].AcceptInput(value);
     public void OnJump(InputAction.CallbackContext value) => compDict[typeof(PlayerJump)].AcceptInput(value);
     public void OnDash(InputAction.CallbackContext value) => compDict[typeof(PlayerDash)].AcceptInput(value);
-    /*{ //Left Shift
-        
-        //TODO: Figure direction of Dash (right and left only for now)
-        float now = Time.time;
-        if (now - dashTime >= dashCooldown){
-            currSpeed += dashForce;
-            if (currSpeed < 0){
-                currSpeed *= -0.5f;
-            }
-            dashTime = now;
-        }
-    }*/
     #endregion
     #region UrsulaFields
     public void OnShoot(InputAction.CallbackContext value){Debug.Log("Shoot"); //Left Mouse Button
