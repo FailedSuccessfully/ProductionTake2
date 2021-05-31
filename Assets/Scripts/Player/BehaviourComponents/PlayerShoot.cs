@@ -18,11 +18,6 @@ public class PlayerShoot : PlayerComponent
             Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             dir = MousePos - (Vector2)transform.position;
             ComponentAction += ApplyShot;
-
-           /* PelletController pellet = Instantiate(shot);
-            pellet.transform.position =  transform.position;
-
-            pellet.movement = dir.normalized;*/
         }
     }
 
