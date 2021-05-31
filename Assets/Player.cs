@@ -18,11 +18,8 @@ public class Player : MonoBehaviour
     public PlayerStats myStats;
     protected internal Vector2 direction => ((PlayerMovement)compDict[typeof(PlayerMovement)]).myDirection;
     protected internal Vector2 lastDirectionalInput;
-
-
-    [SerializeField]
-    float  boostForce;
     #endregion
+    
     #region UrsulaFields
     public PelletController PelletPrefab;
     public bool IsTouchingFloor, IsTouchingWall;
@@ -48,7 +45,7 @@ public class Player : MonoBehaviour
             inputs = GetComponent<PlayerInput>().currentActionMap;
             compDict.Add(typeof(PlayerBoost), new PlayerBoost(this));
             compDict.Add(typeof(PlayerShoot), new PlayerShoot(this));
-            
+
             pm = GetComponent<BoxCollider2D>().sharedMaterial;
         }
 

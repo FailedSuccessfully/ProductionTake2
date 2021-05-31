@@ -16,7 +16,7 @@ public class PlayerJump : PlayerComponent
 
     public override void AcceptInput(InputAction.CallbackContext value)
     {   
-        if (value.performed && currJump <= jumpNum){
+        if (value.performed && currJump < jumpNum){
             // adds a jump call to be invoked on fixed update
             this.ComponentAction += Jump;
             currJump++;
