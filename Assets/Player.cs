@@ -114,6 +114,7 @@ public class Player : MonoBehaviour
     public void OnMove(InputAction.CallbackContext value) => compDict[typeof(PlayerMovement)].AcceptInput(value);
     public void OnJump(InputAction.CallbackContext value) => compDict[typeof(PlayerJump)].AcceptInput(value);
     public void OnDash(InputAction.CallbackContext value) => compDict[typeof(PlayerDash)].AcceptInput(value);
+    public void OnBoost(InputAction.CallbackContext value) => compDict[typeof(PlayerBoost)].AcceptInput(value);
     #endregion
     #region UrsulaFields
     public void OnShoot(InputAction.CallbackContext value){Debug.Log("Shoot"); //Left Mouse Button
@@ -131,6 +132,5 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    public void OnBoost(InputAction.CallbackContext value) => compDict[typeof(PlayerBoost)].AcceptInput(value);
     #endregion
 }
