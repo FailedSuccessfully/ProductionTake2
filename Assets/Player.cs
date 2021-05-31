@@ -43,10 +43,12 @@ public class Player : MonoBehaviour
     }
     private void Start() {
             rb = GetComponent<Rigidbody2D>();
-            inputs = GetComponent<PlayerInput>().currentActionMap;
-            compDict.Add(typeof(PlayerBoost), new PlayerBoost(this));
             rb.gravityScale = myStats.playerGravity;
 
+            inputs = GetComponent<PlayerInput>().currentActionMap;
+            compDict.Add(typeof(PlayerBoost), new PlayerBoost(this));
+            compDict.Add(typeof(PlayerShoot), new PlayerShoot(this));
+            
             pm = GetComponent<BoxCollider2D>().sharedMaterial;
         }
 
@@ -100,34 +102,16 @@ public class Player : MonoBehaviour
     }
     internal IEnumerator BlockAllInputsForSeconds(float time = 0.5f) {
         inputs.Disable();
-        Debug.Log($"inputs disabled");
         yield return new WaitForSeconds(time);
         inputs.Enable();
-        Debug.Log($"inputs enabled");
         yield return null;
     }
 
-	#region  ItayActions
     public void OnMove(InputAction.CallbackContext value) => compDict[typeof(PlayerMovement)].AcceptInput(value);
     public void OnJump(InputAction.CallbackContext value) => compDict[typeof(PlayerJump)].AcceptInput(value);
     public void OnDash(InputAction.CallbackContext value) => compDict[typeof(PlayerDash)].AcceptInput(value);
     public void OnBoost(InputAction.CallbackContext value) => compDict[typeof(PlayerBoost)].AcceptInput(value);
-    #endregion
-    #region UrsulaFields
-    public void OnShoot(InputAction.CallbackContext value){Debug.Log("Shoot"); //Left Mouse Button
-        
-        if (value.performed){
-        Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-
-        Vector2 dir = MousePos - (Vector2)transform.position;
-
-        PelletController pellet = Instantiate(PelletPrefab);
-        pellet.transform.position =  transform.position;
-
-        pellet.movement = dir.normalized;
-        }
-    }
-    #endregion
+    public void OnShoot(InputAction.CallbackContext value) => compDict[typeof(PlayerShoot)].AcceptInput(value);
 
     #endregion
 }
