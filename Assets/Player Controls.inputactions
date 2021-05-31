@@ -44,14 +44,6 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "BoostAim",
-                    "type": "Button",
-                    "id": "f58f0cff-55d5-4c85-af7f-13ead502c287",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -147,21 +139,10 @@
                     "name": "",
                     "id": "9eae31a6-5e5d-4533-8be8-312fe3b607e3",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "Press(behavior=1)",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": " Keyboard & Mouse",
                     "action": "Boost",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1f4c0468-33e7-4fd6-a7d0-9ac3a041d647",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": " Keyboard & Mouse",
-                    "action": "BoostAim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

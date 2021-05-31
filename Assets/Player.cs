@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     #region Fields
     Rigidbody2D rb;
     Dictionary<Type, PlayerComponent> compDict = new Dictionary<Type, PlayerComponent>();
-    InputActionMap inputs;
+    internal InputActionMap inputs;
     PhysicsMaterial2D pm;
 
     #region ItayFields
@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     private void Start() {
             rb = GetComponent<Rigidbody2D>();
             inputs = GetComponent<PlayerInput>().currentActionMap;
+            compDict.Add(typeof(PlayerBoost), new PlayerBoost(this));
             rb.gravityScale = myStats.playerGravity;
 
             pm = GetComponent<BoxCollider2D>().sharedMaterial;
@@ -100,7 +101,6 @@ public class Player : MonoBehaviour
         Debug.Log($"action {action.name} is enabled");
         yield return null;
     }
-
     internal IEnumerator BlockAllInputsForSeconds(float time = 0.5f) {
         inputs.Disable();
         Debug.Log($"inputs disabled");
@@ -131,28 +131,6 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    public void OnBoost(InputAction.CallbackContext value)
-    {
-        Debug.Log("Boost");
-        if (value.performed){
-        Time.timeScale = 1f;
-        Aiming = false;
-        Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 dir = MousePos - (Vector2)transform.position;
-
-        rb.AddForce(dir.normalized * boostForce * boostForce , ForceMode2D.Impulse);
-        }
-        currSpeed *= rb.velocity.normalized.x;
-
-    }
-
-    public void OnBoostAim(InputAction.CallbackContext value)
-    {
-        if (value.performed){
-        Debug.Log("Aiming");
-        Aiming = true;
-        Time.timeScale = 0.1f;
-        }
-    }
+    public void OnBoost(InputAction.CallbackContext value) => compDict[typeof(PlayerBoost)].AcceptInput(value);
     #endregion
 }
