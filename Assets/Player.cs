@@ -22,12 +22,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     float  boostForce;
-    internal float currSpeed = 0;
-    int currJump = 0;
     #endregion
     #region UrsulaFields
     public PelletController PelletPrefab;
-    public bool Aiming;
     public bool IsTouchingFloor, IsTouchingWall;
     public Vector2 WallVector;
     #endregion
