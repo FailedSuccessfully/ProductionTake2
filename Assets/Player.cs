@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     #region ItayFields
     [SerializeReference]
     public PlayerStats myStats;
+    public float boostMeter => ((PlayerBoost)compDict[typeof(PlayerBoost)]).boostMeter;
     protected internal Vector2 direction => ((PlayerMovement)compDict[typeof(PlayerMovement)]).myDirection;
     protected internal Vector2 lastDirectionalInput;
     #endregion
