@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b50a1815944341b9952c0318a9af0, type: 3}
   m_Name: DefaultStats
   m_EditorClassIdentifier: 
-  maxSpeed: 50
+  maxSpeed: 150
   acceleration: 200
-  deceleration: 60
+  deceleration: 100
   jumpForce: 10
   dashForce: 700
   boostForce: 10
   dashCooldown: 1
   dashDuration: 0.2
   jumpNum: 2
-  playerGravity: 10
+  playerGravity: 25

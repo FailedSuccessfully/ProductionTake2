@@ -45,8 +45,10 @@ public class Player : MonoBehaviour
             inputs = GetComponent<PlayerInput>().currentActionMap;
             compDict.Add(typeof(PlayerBoost), new PlayerBoost(this));
             compDict.Add(typeof(PlayerShoot), new PlayerShoot(this));
+            compDict.Add(typeof(PlayerDuck), new PlayerDuck(this));
 
-            pm = GetComponent<BoxCollider2D>().sharedMaterial;
+
+        pm = GetComponent<BoxCollider2D>().sharedMaterial;
         }
 
         private void FixedUpdate() {
@@ -62,7 +64,7 @@ public class Player : MonoBehaviour
         if (other.collider.tag == "Wall")
         {
             IsTouchingWall = true;
-            pm.friction = 0.85f;
+            pm.friction = 0.5f;
 
             WallVector = new Vector2(transform.position.x - other.transform.position.x, 0).normalized;
 
@@ -77,7 +79,7 @@ public class Player : MonoBehaviour
         {
             WallVector = Vector2.zero;
             IsTouchingWall = false;
-            pm.friction = 0.3f;
+            pm.friction = 0f;
         }
     }
 
@@ -109,6 +111,6 @@ public class Player : MonoBehaviour
     public void OnDash(InputAction.CallbackContext value) => compDict[typeof(PlayerDash)].AcceptInput(value);
     public void OnBoost(InputAction.CallbackContext value) => compDict[typeof(PlayerBoost)].AcceptInput(value);
     public void OnShoot(InputAction.CallbackContext value) => compDict[typeof(PlayerShoot)].AcceptInput(value);
-
+    public void OnDuck(InputAction.CallbackContext value) => compDict[typeof(PlayerDuck)].AcceptInput(value);
     #endregion
 }
