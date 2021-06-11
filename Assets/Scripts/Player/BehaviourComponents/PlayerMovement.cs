@@ -27,7 +27,9 @@ public class PlayerMovement : PlayerComponent
 
     void ChangeVelocity() {
         Vector2 force = Vector2.zero;
-        
+
+        //Debug.Log(myDirection);
+
         //compare movement direction
         // if velocity matches direction
         if ( Math.Sign(myDirection.x) == Math.Sign(velocity.x)){
@@ -43,6 +45,8 @@ public class PlayerMovement : PlayerComponent
         // Scale to mass
         force *= rigidbody.mass;
         rigidbody.AddForce(force);
+
+        Debug.Log(velocity);
     }
 
 }
