@@ -59,7 +59,6 @@ public class Player : MonoBehaviour
         
         if (col.gameObject.layer == LayerMask.NameToLayer("Wall")){
             inputs.FindAction("WallControl")?.Enable();
-            Debug.Log("enablin");
             (compDict[typeof(PlayerWallClimb)] as PlayerWallClimb).wallDir = col.relativeVelocity.x;
         }
     }
@@ -67,7 +66,6 @@ public class Player : MonoBehaviour
     private void OnCollisionExit2D(Collision2D col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Wall")){
-            Debug.Log("disabling");
             inputs.FindAction("WallControl")?.Disable();
             (compDict[typeof(PlayerWallClimb)] as PlayerWallClimb).wallDir = 0f;
         }
