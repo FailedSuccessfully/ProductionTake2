@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     #region ItayFields
     [SerializeReference]
     public PlayerStats myStats;
-    public float boostMeter => ((PlayerBoost)compDict[typeof(PlayerBoost)]).boostMeter;
     protected internal Vector2 direction => ((PlayerMovement)compDict[typeof(PlayerMovement)]).myDirection;
     protected internal Vector2 lastDirectionalInput;
     #endregion
@@ -34,23 +33,22 @@ public class Player : MonoBehaviour
     #endregion
 
     #region MonoBehaviour Functions
-    private void InputInit(){
-
-            inputs = GetComponent<PlayerInput>().currentActionMap;
+    private void Awake(){
             compDict.Add(typeof(PlayerMovement), new PlayerMovement(this));
             compDict.Add(typeof(PlayerJump), new PlayerJump(this));
             compDict.Add(typeof(PlayerDash), new PlayerDash(this));
-            compDict.Add(typeof(PlayerSlam), new PlayerSlam(this));
-            compDict.Add(typeof(PlayerBoost), new PlayerBoost(this));
-            compDict.Add(typeof(PlayerShoot), new PlayerShoot(this));
-            compDict.Add(typeof(PlayerWallClimb), new PlayerWallClimb(this));
-
-            inputs.FindAction("WallControl")?.Disable();
     }
     private void Start() {
             rb = GetComponent<Rigidbody2D>();
             rb.gravityScale = myStats.playerGravity;
-            InputInit();
+
+            inputs = GetComponent<PlayerInput>().currentActionMap;
+            compDict.Add(typeof(PlayerBoost), new PlayerBoost(this));
+            compDict.Add(typeof(PlayerShoot), new PlayerShoot(this));
+            compDict.Add(typeof(PlayerDuck), new PlayerDuck(this));
+
+
+        pm = GetComponent<BoxCollider2D>().sharedMaterial;
         }
 
         private void FixedUpdate() {
@@ -60,19 +58,28 @@ public class Player : MonoBehaviour
             }
         }
     
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        
-        if (col.gameObject.layer == LayerMask.NameToLayer("Wall")){
-            inputs.FindAction("WallControl")?.Enable();
-            (compDict[typeof(PlayerWallClimb)] as PlayerWallClimb).wallDir = col.relativeVelocity.x;
+
+        if (other.collider.tag == "Wall")
+        {
+            IsTouchingWall = true;
+            pm.friction = 0.5f;
+
+            WallVector = new Vector2(transform.position.x - other.transform.position.x, 0).normalized;
+
+            //rb.velocity = Vector3.zero;
+            //rb.gravityScale = 2f;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D col)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Wall")){
-            inputs.FindAction("WallControl")?.Disable();
+        if (collision.collider.tag == "Wall")
+        {
+            WallVector = Vector2.zero;
+            IsTouchingWall = false;
+            pm.friction = 0f;
         }
     }
 
@@ -102,11 +109,8 @@ public class Player : MonoBehaviour
     public void OnMove(InputAction.CallbackContext value) => compDict[typeof(PlayerMovement)].AcceptInput(value);
     public void OnJump(InputAction.CallbackContext value) => compDict[typeof(PlayerJump)].AcceptInput(value);
     public void OnDash(InputAction.CallbackContext value) => compDict[typeof(PlayerDash)].AcceptInput(value);
-    public void OnSlam(InputAction.CallbackContext value) => compDict[typeof(PlayerSlam)].AcceptInput(value);
     public void OnBoost(InputAction.CallbackContext value) => compDict[typeof(PlayerBoost)].AcceptInput(value);
     public void OnShoot(InputAction.CallbackContext value) => compDict[typeof(PlayerShoot)].AcceptInput(value);
     public void OnDuck(InputAction.CallbackContext value) => compDict[typeof(PlayerDuck)].AcceptInput(value);
-    public void OnWallControl(InputAction.CallbackContext value) => compDict[typeof(PlayerWallClimb)].AcceptInput(value);
-
     #endregion
 }

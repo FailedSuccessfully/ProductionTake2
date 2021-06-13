@@ -52,20 +52,6 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold"
-                    "name": "WallControl",
-                    "type": "Value",
-                    "id": "76bc70dd-1347-4956-a38e-9d03fd0c6f84",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Slam",
-                    "type": "Button",
-                    "id": "94b20651-2d3c-4c1f-a94c-848aac3fec63",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -176,46 +162,6 @@
                     "processors": "",
                     "groups": " Keyboard & Mouse",
                     "action": "Duck",
-                    "name": "1D Axis",
-                    "id": "5bfebd7d-864a-440f-8835-2ded07326cf3",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "WallControl",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "b0dba83d-7310-4a39-a3d1-2f03a82a548d",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "WallControl",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "d2d6f273-b261-446d-a4d7-176df8dee549",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "WallControl",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "ff4e5e22-e60c-4ae4-9c8a-2ef9d7c45862",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
