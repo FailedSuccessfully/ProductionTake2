@@ -27,7 +27,7 @@ public abstract class PlayerComponent : BehaviourComponent
 
 
     /// <summary>
-    /// The component must define the way it accepts input from unity InputSystem
+    /// The component may define the way it accepts input from unity InputSystem
     /// </summary>
     /// <param name="value"> Context from input system call </param>
     public abstract void AcceptInput(InputAction.CallbackContext value);

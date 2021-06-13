@@ -8,12 +8,10 @@ public class PlayerBoost : PlayerComponent
 {
     IEnumerable<InputAction> inputsToDisable;
     float boostForce => player.myStats.boostForce;
-    internal float boostMeter;
     Vector2 dir;
     public PlayerBoost(Player player) : base(player)
     {
         inputsToDisable = player.inputs.actions.Where(a => a.name.ToLower() != "boost" );
-        boostMeter = 100f;
     }
 
     public override void AcceptInput(InputAction.CallbackContext value)
@@ -24,15 +22,16 @@ public class PlayerBoost : PlayerComponent
                     action.Disable();
                 }
                 Time.timeScale *= 0.1f;
-                ComponentAction += DrainBoost;
-            break;
+                break;
             case (InputActionPhase.Canceled):
-                BoostCancel();
-                if (boostMeter > 0){
-                    Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-                    dir = MousePos - (Vector2)transform.position;
-                    ComponentAction += ApplyForce;
+                foreach (InputAction action in inputsToDisable){
+                    action.Enable();
                 }
+                Time.timeScale *= 10f;
+                Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                dir = MousePos - (Vector2)transform.position;
+                ComponentAction += ApplyForce;
+
             break;
         }
     }
@@ -40,20 +39,5 @@ public class PlayerBoost : PlayerComponent
     void ApplyForce(){
         rigidbody.AddForce(dir.normalized * Mathf.Pow(boostForce, 2f) * rigidbody.mass, ForceMode2D.Impulse);
         ComponentAction-= ApplyForce;
-    }
-
-    void DrainBoost(){
-        boostMeter = Mathf.Floor(boostMeter) > 0 ? boostMeter - Time.fixedDeltaTime * 200f : 0;
-        if (boostMeter == 0){
-            BoostCancel();
-        }
-    }
-
-    void BoostCancel(){
-                foreach (InputAction action in inputsToDisable){
-                    action.Enable();
-                }
-                Time.timeScale /= Time.timeScale;
-                ComponentAction -= DrainBoost;
     }
 }
