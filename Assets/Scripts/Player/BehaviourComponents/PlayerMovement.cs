@@ -28,25 +28,29 @@ public class PlayerMovement : PlayerComponent
     void ChangeVelocity() {
         Vector2 force = Vector2.zero;
 
+// if velocity is zero or dir times velocity is positive
+// accelerate
+// else
+// decelerate
         //Debug.Log(myDirection);
+        float dir = Math.Sign(myDirection.x);
+        float vel = Math.Sign(velocity.x);
+        Debug.Log( dir * vel);
 
         //compare movement direction
-        // if velocity matches direction
-        if ( Math.Sign(myDirection.x) == Math.Sign(velocity.x)){
+        // if velocity matches direction / dir is zero or dir is not vel 
+        if (vel == 0f || dir * vel > 0){
             //accelerate
-            if (Mathf.Abs(velocity.x) < maxSpeed)
-                force += (myDirection * (acceleration + velocity.x / maxSpeed));
+            force += myDirection * acceleration;
         }
         else{
             //decelerate
-            force += (Vector2.left * (deceleration - velocity.x / maxSpeed) * Mathf.Sign(velocity.x));
+            force += myDirection * deceleration;
         }
 
         // Scale to mass
         force *= rigidbody.mass;
         rigidbody.AddForce(force);
-
-        Debug.Log(velocity);
     }
 
 }

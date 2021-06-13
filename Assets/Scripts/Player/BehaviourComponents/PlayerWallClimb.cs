@@ -15,7 +15,7 @@ public class PlayerWallClimb : PlayerComponent
     public override void AcceptInput(InputAction.CallbackContext value)
     {
         dir = value.ReadValue<float>();
-            Debug.Log($"dir: {dir}, walldir: {wallDir}");
+            //Debug.Log($"dir: {dir}, walldir: {wallDir}");
         if (wallDir * dir < 0){
             ComponentAction = SlowFall;
             //Debug.Log("A");
@@ -27,8 +27,8 @@ public class PlayerWallClimb : PlayerComponent
     }
 
     void SlowFall(){
-        Vector2 f = Vector2.up * wallGrind * rigidbody.mass;
-        Debug.Log(f);
+        Vector2 f = Vector2.up * wallGrind * rigidbody.mass * rigidbody.gravityScale;
+        //Debug.Log(f);
         rigidbody.AddForce(f, ForceMode2D.Force);
     }
 }

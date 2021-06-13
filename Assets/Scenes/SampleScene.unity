@@ -1537,7 +1537,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1283330843}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: b21981f0be18e1646894f5e6a95862d8, type: 2}
+  m_Material: {fileID: 6200000, guid: 172541638b8471c4ba3bfc4a646c7952, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1747,9 +1747,37 @@ MonoBehaviour:
     m_ActionId: 4bfe8cbc-f533-42c6-bf6c-9de5c3a78adb
     m_ActionName: PlayerActions/Boost[/Mouse/rightButton]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 77d5c1ab-362b-4baa-9b39-c660e1a4876c
-    m_ActionName: PlayerActions/Duck[/Keyboard/s]
+      m_Calls:
+      - m_Target: {fileID: 1283330849}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnWallControl
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 76bc70dd-1347-4956-a38e-9d03fd0c6f84
+    m_ActionName: PlayerActions/WallControl[/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1283330849}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnSlam
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 94b20651-2d3c-4c1f-a94c-848aac3fec63
+    m_ActionName: PlayerActions/Slam[/Keyboard/s]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerActions
@@ -1769,10 +1797,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myStats: {fileID: 11400000, guid: 3ea7b7f00e1144f4b938df84c7458cab, type: 2}
   PelletPrefab: {fileID: -7466580241484319887, guid: 9ee0c707cb7ffbb41909a53294f5109d, type: 3}
-  IsTouchingFloor: 0
-  IsTouchingWall: 0
-  WallVector: {x: 0, y: 0}
-  isGrounded: 0
 --- !u!1001 &1351196367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2349,11 +2373,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3364330568601837874, guid: 04609afe2374c2d418446efff8381700, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -196.9
+      value: -198
       objectReference: {fileID: 0}
     - target: {fileID: 3364330568601837874, guid: 04609afe2374c2d418446efff8381700, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 59.5967
+      value: 54
       objectReference: {fileID: 0}
     - target: {fileID: 3364330568601837874, guid: 04609afe2374c2d418446efff8381700, type: 3}
       propertyPath: m_LocalPosition.z

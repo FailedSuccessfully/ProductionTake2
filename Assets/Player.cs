@@ -23,12 +23,6 @@ public class Player : MonoBehaviour
     
     #region UrsulaFields
     public PelletController PelletPrefab;
-    public bool IsTouchingFloor, IsTouchingWall;
-    public Vector2 WallVector;
-    #endregion
-
-    #region AvrahamFields
-    public bool isGrounded = false;
     #endregion
 
     #endregion
@@ -73,8 +67,9 @@ public class Player : MonoBehaviour
     private void OnCollisionExit2D(Collision2D col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Wall")){
-            //Debug.Log("disabling");
-            //inputs.FindAction("WallControl")?.Disable();
+            Debug.Log("disabling");
+            inputs.FindAction("WallControl")?.Disable();
+            (compDict[typeof(PlayerWallClimb)] as PlayerWallClimb).wallDir = 0f;
         }
     }
 
