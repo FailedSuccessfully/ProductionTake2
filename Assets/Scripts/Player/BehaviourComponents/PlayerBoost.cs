@@ -43,7 +43,7 @@ public class PlayerBoost : PlayerComponent
     }
 
     void DrainBoost(){
-        boostMeter = Mathf.Floor(boostMeter) > 0 ? boostMeter - Time.fixedDeltaTime * 100f : 0;
+        boostMeter = Mathf.Floor(boostMeter) > 0 ? boostMeter - Time.fixedDeltaTime * 200f : 0;
         if (boostMeter == 0){
             BoostCancel();
         }
