@@ -26,6 +26,10 @@ public abstract class PlayerComponent : BehaviourComponent
     public virtual Action ComponentAction {  get; protected set; }
 
 
+    public virtual void ResetJumps()
+    { }
+
+
     /// <summary>
     /// The component must define the way it accepts input from unity InputSystem
     /// </summary>
