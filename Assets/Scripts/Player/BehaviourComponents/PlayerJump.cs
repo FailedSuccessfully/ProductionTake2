@@ -8,6 +8,8 @@ public class PlayerJump : PlayerComponent
     int jumpNum => player.myStats.jumpNum;
     float jumpForce => player.myStats.jumpForce;
     int currJump;
+
+    bool IsJumping;
     public PlayerJump(Player player) : base(player)
     {
         this.ComponentAction += CheckGrounded;
@@ -34,7 +36,7 @@ public class PlayerJump : PlayerComponent
         ComponentAction -= Jump;
     }
 
-    void ResetJumps() => currJump = 0;
+    public override void ResetJumps() => currJump = 0;
 
     void CheckGrounded() {
         // Check against ground mask

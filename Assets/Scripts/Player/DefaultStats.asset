@@ -15,12 +15,12 @@ MonoBehaviour:
   maxSpeed: 250
   acceleration: 300
   deceleration: 400
-  jumpForce: 12
+  jumpForce: 13
   dashForce: 700
   boostForce: 10
   dashCooldown: 1
   dashDuration: 0.2
-  wallGrind: 5
-  downForce: 50
-  jumpNum: 2
+  wallGrind: 7.5
+  downForce: 10
+  jumpNum: 1
   playerGravity: 25

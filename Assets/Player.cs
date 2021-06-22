@@ -61,6 +61,8 @@ public class Player : MonoBehaviour
         if (col.gameObject.layer == LayerMask.NameToLayer("Wall")){
             inputs.FindAction("WallControl")?.Enable();
             (compDict[typeof(PlayerWallClimb)] as PlayerWallClimb).wallDir = col.relativeVelocity.x;
+
+            compDict[typeof(PlayerJump)].ResetJumps();
         }
     }
 
