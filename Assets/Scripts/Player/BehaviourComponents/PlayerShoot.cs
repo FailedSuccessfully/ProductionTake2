@@ -17,6 +17,14 @@ public class PlayerShoot : PlayerComponent
         if (value.performed){
             Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             dir = MousePos - (Vector2)transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir.normalized, Mathf.Infinity, LayerMask.GetMask("Enemy"));
+            if (hit){
+                // check to see if on screen
+                if (hit.collider.GetComponent<SpriteRenderer>().isVisible){
+                    //apply hit
+                    GameManager.HandleEnemyDeath(hit.collider.GetComponent<Enemy>());
+                }
+            }
             ComponentAction += ApplyShot;
         }
     }

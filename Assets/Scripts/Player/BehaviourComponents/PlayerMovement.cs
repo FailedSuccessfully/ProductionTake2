@@ -35,7 +35,6 @@ public class PlayerMovement : PlayerComponent
         //Debug.Log(myDirection);
         float dir = Math.Sign(myDirection.x);
         float vel = Math.Sign(velocity.x);
-        Debug.Log( dir * vel);
 
         //compare movement direction
         // if velocity matches direction / dir is zero or dir is not vel 
