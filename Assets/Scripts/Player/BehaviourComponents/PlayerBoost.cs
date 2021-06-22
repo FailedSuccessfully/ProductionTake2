@@ -8,12 +8,13 @@ public class PlayerBoost : PlayerComponent
 {
     IEnumerable<InputAction> inputsToDisable;
     float boostForce => player.myStats.boostForce;
-    internal float boostMeter;
+    internal float maxBoostMeter = 100f;
+    internal float curBoostMeter;
     Vector2 dir;
     public PlayerBoost(Player player) : base(player)
     {
         inputsToDisable = player.inputs.actions.Where(a => a.name.ToLower() != "boost" );
-        boostMeter = 100f;
+        curBoostMeter = maxBoostMeter;
     }
 
     public override void AcceptInput(InputAction.CallbackContext value)
@@ -28,7 +29,7 @@ public class PlayerBoost : PlayerComponent
             break;
             case (InputActionPhase.Canceled):
                 BoostCancel();
-                if (boostMeter > 0){
+                if (curBoostMeter > 0){
                     Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                     dir = MousePos - (Vector2)transform.position;
                     ComponentAction += ApplyForce;
@@ -43,8 +44,8 @@ public class PlayerBoost : PlayerComponent
     }
 
     void DrainBoost(){
-        boostMeter = Mathf.Floor(boostMeter) > 0 ? boostMeter - Time.fixedDeltaTime * 200f : 0;
-        if (boostMeter == 0){
+        curBoostMeter = Mathf.Floor(curBoostMeter) > 0 ? curBoostMeter - Time.fixedDeltaTime * 200f : 0;
+        if (curBoostMeter == 0){
             BoostCancel();
         }
     }
@@ -56,4 +57,11 @@ public class PlayerBoost : PlayerComponent
                 Time.timeScale /= Time.timeScale;
                 ComponentAction -= DrainBoost;
     }
+
+    public void AddBoost(int boost){
+        if (curBoostMeter < maxBoostMeter){
+            curBoostMeter = Mathf.Clamp((curBoostMeter + boost), 0f, maxBoostMeter);
+        }
+    }
 }
+

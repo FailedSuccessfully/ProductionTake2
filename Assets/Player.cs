@@ -9,14 +9,14 @@ public class Player : MonoBehaviour
 {
     #region Fields
     Rigidbody2D rb;
-    Dictionary<Type, PlayerComponent> compDict = new Dictionary<Type, PlayerComponent>();
+    internal Dictionary<Type, PlayerComponent> compDict = new Dictionary<Type, PlayerComponent>();
     internal InputActionMap inputs;
     PhysicsMaterial2D pm;
 
     #region ItayFields
     [SerializeReference]
     public PlayerStats myStats;
-    public float boostMeter => ((PlayerBoost)compDict[typeof(PlayerBoost)]).boostMeter;
+    public float boostMeter => ((PlayerBoost)compDict[typeof(PlayerBoost)]).curBoostMeter;
     protected internal Vector2 direction => ((PlayerMovement)compDict[typeof(PlayerMovement)]).myDirection;
     protected internal Vector2 lastDirectionalInput;
     #endregion
@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
             foreach(PlayerComponent component in compDict.Values){
                 component.ComponentAction?.Invoke();
             }
+            Debug.Log(boostMeter);
         }
     
     private void OnCollisionEnter2D(Collision2D col)
