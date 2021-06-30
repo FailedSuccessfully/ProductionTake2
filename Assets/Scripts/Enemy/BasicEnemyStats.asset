@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4e70babeea52a4bb46cf6b2193e029, type: 3}
   m_Name: BasicEnemyStats
   m_EditorClassIdentifier: 
-  moveSpd: 5
+  moveSpd: 2

@@ -52,7 +52,6 @@ public class Player : MonoBehaviour
             foreach(PlayerComponent component in compDict.Values){
                 component.ComponentAction?.Invoke();
             }
-            Debug.Log(boostMeter);
         }
     
     private void OnCollisionEnter2D(Collision2D col)

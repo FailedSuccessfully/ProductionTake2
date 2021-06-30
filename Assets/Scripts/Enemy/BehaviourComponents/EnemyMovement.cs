@@ -1,57 +1,76 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : EnemyBehaviour
 {
-    float patrolRnage = 15f;
+    float patrolRnage = 40f;
+    float patrolWait = 5f;
+    float waitTimestamp;
     float[] bounds;
+    Action patrolAction;
     internal float heightOffset=0.1f;
     public EnemyMovement(Enemy enemy) : base(enemy)
     {
         bounds = new float[2];
-        bounds[0] = transform.position.x - patrolRnage;
-        bounds[1] = transform.position.x + patrolRnage;
+        SetBounds();
+        waitTimestamp = Time.time;
+        animator.SetBool(isMoveHash, false);
+        patrolAction = Wait;
     }
 
     public void Move(){
-        //MaintainHeight();
+        //Debug.Log($"time: {Time.time} timestamp: {waitTimestamp}");
         if (!enemy.HasTarget)
-            Patrol();
+            patrolAction.Invoke();
         else
             Chase();
     }
 
-    void Patrol(){
-        Vector2 newPos = transform.position;
-        newPos.x += enemy.dir.x * enemy.myStats.moveSpd * Time.deltaTime * 10;
-        if (newPos.x - bounds[0] < 0 || newPos.x - bounds[1] > 0)
+    private void Wait()
+    {
+        if (Time.time - waitTimestamp > patrolWait){
+            transform.Rotate(Vector3.up, 180);
             enemy.dir *= -1;
+            animator.SetBool(isMoveHash, true);
+            patrolAction = Patrol;
+        }
+    }
+
+    void Patrol(){
+        Vector2 newPos = transform.localPosition;
+        newPos.x += enemy.dir.x * enemy.myStats.moveSpd * Time.deltaTime * 10;
+        if (newPos.x - bounds[0] < 0 || newPos.x - bounds[1] > 0){
+            Debug.Log($"newpos x: {newPos.x} bounds: {bounds[0]}, {bounds[1]} ");
+            HandleEdge();
+        }
         else
             transform.position = newPos;
     }
     void Chase(){
         Vector2 playerPos = GameManager.GetPlayerPosition();
-        if (Mathf.Abs(Vector2.Distance(this.transform.position, playerPos)) > enemy.attackRange){
+        float dist = Vector2.Distance(this.transform.position, playerPos);
+        if (Mathf.Abs(dist) > enemy.attackRange){
+            transform.rotation.SetLookRotation(Vector3.right * Mathf.Sign(dist));
             Vector2 newPos = transform.position;
-            newPos.x += Mathf.Sign((playerPos.x - this.transform.position.x)) * enemy.myStats.moveSpd * Time.deltaTime * 10;
+            newPos.x += Mathf.Sign((playerPos.x - this.transform.position.x)) * enemy.myStats.moveSpd * 2 * Time.deltaTime * 10;
             transform.position = newPos;
-        }   
-    }
-
-    private void MaintainHeight(){
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, float.PositiveInfinity ,LayerMask.GetMask("Ground"));
-        if (hit.collider != null){
-            if (hit.distance > 5){
-                transform.position = new Vector2(transform.position.x, transform.position.y - heightOffset);
-            }
-            else{
-                transform.position = new Vector2(transform.position.x, transform.position.y + heightOffset);
-            }
         }
         else {
-                transform.position = new Vector2(transform.position.x, transform.position.y + heightOffset);
-        }
-
+            SetBounds();
+        }  
     }
+
+    void HandleEdge(){
+        Debug.Log("edging");
+        waitTimestamp = Time.time;
+        patrolAction = Wait;
+        animator.SetBool(isMoveHash, false);
+    }
+    void SetBounds(){
+        bounds[0] = transform.localPosition.x - patrolRnage;
+        bounds[1] = transform.localPosition.x + patrolRnage;
+    }
+
 }
