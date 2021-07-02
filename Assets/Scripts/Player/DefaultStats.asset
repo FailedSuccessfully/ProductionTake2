@@ -22,5 +22,5 @@ MonoBehaviour:
   dashDuration: 0.2
   wallGrind: 7.5
   downForce: 10
-  jumpNum: 1
+  extraJumps: 2
   playerGravity: 25

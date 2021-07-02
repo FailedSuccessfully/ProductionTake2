@@ -5,9 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerJump : PlayerComponent
 {
-    int jumpNum => player.myStats.jumpNum;
+    int jumpNum => player.myStats.extraJumps;
     float jumpForce => player.myStats.jumpForce;
     int currJump;
+    bool isGrounded;
 
     bool IsJumping;
     public PlayerJump(Player player) : base(player)
@@ -18,7 +19,7 @@ public class PlayerJump : PlayerComponent
 
     public override void AcceptInput(InputAction.CallbackContext value)
     {   
-        if (value.performed && currJump < jumpNum){
+        if (value.performed && (isGrounded || currJump < jumpNum)){
             // adds a jump call to be invoked on fixed update
             this.ComponentAction += Jump;
             currJump++;
@@ -32,6 +33,10 @@ public class PlayerJump : PlayerComponent
         rigidbody.constraints = rigidbody.constraints ^ RigidbodyConstraints2D.FreezePositionY;
 
         rigidbody.AddForce(Vector2.up * Mathf.Pow(jumpForce, 2) * rigidbody.mass, ForceMode2D.Impulse);
+
+        // jump hotfix
+        if (isGrounded)
+            currJump++;
         // after being called will remove self from component action
         ComponentAction -= Jump;
     }
@@ -41,8 +46,11 @@ public class PlayerJump : PlayerComponent
     void CheckGrounded() {
         // Check against ground mask
         if (rigidbody.IsTouchingLayers(LayerMask.GetMask("Ground"))){
+            isGrounded = true;
             ResetJumps();
         }
+        else
+            isGrounded = false;
     }
 
 }

@@ -10,7 +10,7 @@ public class PlayerStats : ScriptableObject
     [SerializeField]
     public float maxSpeed, acceleration, deceleration, jumpForce, dashForce, boostForce, dashCooldown, dashDuration, wallGrind, downForce;
     [SerializeField]
-    public int jumpNum, playerGravity;
+    public int extraJumps, playerGravity;
 }
 
 
