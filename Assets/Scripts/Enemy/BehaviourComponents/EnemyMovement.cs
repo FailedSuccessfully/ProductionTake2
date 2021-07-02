@@ -42,7 +42,7 @@ public class EnemyMovement : EnemyBehaviour
         Vector2 newPos = transform.localPosition;
         newPos.x += enemy.dir.x * enemy.myStats.moveSpd * Time.deltaTime * 10;
         if (newPos.x - bounds[0] < 0 || newPos.x - bounds[1] > 0){
-            Debug.Log($"newpos x: {newPos.x} bounds: {bounds[0]}, {bounds[1]} ");
+            //Debug.Log($"newpos x: {newPos.x} bounds: {bounds[0]}, {bounds[1]} ");
             HandleEdge();
         }
         else
@@ -63,7 +63,7 @@ public class EnemyMovement : EnemyBehaviour
     }
 
     void HandleEdge(){
-        Debug.Log("edging");
+        //Debug.Log("edging");
         waitTimestamp = Time.time;
         patrolAction = Wait;
         animator.SetBool(isMoveHash, false);

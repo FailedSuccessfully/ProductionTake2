@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
     public static Player player;
-    // Start is called before the first frame update
+    private static Checkpoint activeCP;
+    private static GameManager instance;
+    private void Awake() {
+         if (instance == null)
+            instance = this;
+        else
+            GameObject.Destroy(this);
+    }
     void Start()
     {
         if (player==null)
@@ -25,5 +33,20 @@ public class GameManager : MonoBehaviour
     public static void HandleEnemyDeath(Enemy enemy){
         ((PlayerBoost)player.compDict[typeof(PlayerBoost)]).AddBoost(enemy.boostOnKill);
         GameObject.Destroy(enemy.gameObject);
+    }
+
+    public static void SetCheckpoint(Checkpoint point){
+        if (activeCP != null)
+            activeCP.SetActive(false);
+        activeCP = point;
+        activeCP.SetActive(true);
+        Debug.Log($"Active point is: {activeCP.gameObject.name}");
+    }
+
+    public static void RespawnPlayer(){
+        if (activeCP != null)
+            player.transform.position = activeCP.transform.position;
+        else
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
