@@ -14,7 +14,16 @@ public class Enemy : MonoBehaviour
     EnemyObserve obsComp;
     [SerializeReference]
     internal EnemyStats myStats;
+<<<<<<< Updated upstream
     internal Animator anim;
+=======
+    [SerializeField]
+    internal Animator[] animationModels = new Animator[2];
+    private Animator activeAnimation;
+    [SerializeField]
+    internal BoxCollider2D hurtbox;
+    
+>>>>>>> Stashed changes
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +32,12 @@ public class Enemy : MonoBehaviour
         dir = Vector2.left;
         moveComp = new EnemyMovement(this);
         obsComp = new EnemyObserve(this);
+<<<<<<< Updated upstream
+=======
+        atkComp = new EnemyAttack(this);
+
+        animationModels[(int)EnemyAnimators.Default].speed = myStats.moveSpd;
+>>>>>>> Stashed changes
     }
 
     // Update is called once per frame
