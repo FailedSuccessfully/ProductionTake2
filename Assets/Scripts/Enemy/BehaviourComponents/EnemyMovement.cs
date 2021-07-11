@@ -16,7 +16,7 @@ public class EnemyMovement : EnemyBehaviour
         bounds = new float[2];
         SetBounds();
         waitTimestamp = Time.time;
-        animator.SetBool(isMoveHash, false);
+        anims[((int)EnemyAnimators.Default)].SetBool(isMoveHash, false);
         patrolAction = Wait;
     }
 
@@ -33,7 +33,7 @@ public class EnemyMovement : EnemyBehaviour
         if (Time.time - waitTimestamp > patrolWait){
             transform.Rotate(Vector3.up, 180);
             enemy.dir *= -1;
-            animator.SetBool(isMoveHash, true);
+            anims[((int)EnemyAnimators.Default)].SetBool(isMoveHash, true);
             patrolAction = Patrol;
         }
     }
@@ -66,7 +66,7 @@ public class EnemyMovement : EnemyBehaviour
         //Debug.Log("edging");
         waitTimestamp = Time.time;
         patrolAction = Wait;
-        animator.SetBool(isMoveHash, false);
+        anims[((int)EnemyAnimators.Default)].SetBool(isMoveHash, false);
     }
     void SetBounds(){
         bounds[0] = transform.localPosition.x - patrolRnage;

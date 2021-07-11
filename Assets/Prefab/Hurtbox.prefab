@@ -11,7 +11,11 @@ GameObject:
   - component: {fileID: 6311505742883155479}
   - component: {fileID: 1665648751694343619}
   - component: {fileID: 8752480145664894109}
+<<<<<<< Updated upstream
   m_Layer: 7
+=======
+  m_Layer: 9
+>>>>>>> Stashed changes
   m_Name: Hurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
