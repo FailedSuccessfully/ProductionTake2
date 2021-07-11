@@ -19,7 +19,10 @@ public class EnemyObserve : EnemyBehaviour
     }
     
     public bool CheckAttack(){
-        return enemy.HasTarget && Vector2.Distance(GameManager.GetPlayerPosition(), enemy.transform.position) <= enemy.attackRange;
+        float checkRange = enemy.attackRange;
+        if (enemy.CanAttack)
+            checkRange += enemy.attackRangeBuffer;
+        return enemy.HasTarget && Vector2.Distance(GameManager.GetPlayerPosition(), enemy.transform.position) <= checkRange;
     }
     
 }

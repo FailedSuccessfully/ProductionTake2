@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     internal EnemyAttack atkComp;
     internal Vector2 dir;
     internal float attackRange = 10f;
+    internal float attackRangeBuffer = 20f;
     internal float targetRange = 80f;
     internal bool HasTarget = false;
     internal bool CanAttack = false;
