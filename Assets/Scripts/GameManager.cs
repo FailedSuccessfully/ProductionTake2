@@ -49,4 +49,9 @@ public class GameManager : MonoBehaviour
         else
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public static void DoWin(Winpoint point){
+        point.SetMessageActive(true);
+        Time.timeScale = 0;
+    }
 }
