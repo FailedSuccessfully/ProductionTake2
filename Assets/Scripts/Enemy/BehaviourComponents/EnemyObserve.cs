@@ -14,11 +14,12 @@ public class EnemyObserve : EnemyBehaviour
     }
 
     public bool CheckTarget(){
-       RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, enemy.dir, enemy.targetRange, LayerMask.GetMask("Player"));
+       RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, enemy.DirectionToPlayer(), enemy.targetRange, LayerMask.GetMask("Player"));        
        return hit ? true : false;
     }
     
     public bool CheckAttack(){
-        return Vector2.Distance(GameManager.GetPlayerPosition(), enemy.transform.position) <= enemy.attackRange;
+        return enemy.HasTarget && Vector2.Distance(GameManager.GetPlayerPosition(), enemy.transform.position) <= enemy.attackRange;
     }
+    
 }

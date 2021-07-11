@@ -29,11 +29,16 @@ public class EnemyMovement : EnemyBehaviour
             Chase();
     }
 
+    void EnsureRotation(){
+        transform.rotation =enemy.dir == Vector2.left? Quaternion.AngleAxis(0, Vector3.up):Quaternion.AngleAxis(180, Vector3.up);
+    }
+            
     private void Wait()
     {
         if (Time.time - waitTimestamp > patrolWait){
-            transform.Rotate(Vector3.up, 180);
+            //transform.Rotate(Vector3.up, 180);
             enemy.dir *= -1;
+            EnsureRotation();
             myAnim.SetBool(isMoveHash, true);
             patrolAction = Patrol;
         }
@@ -43,19 +48,19 @@ public class EnemyMovement : EnemyBehaviour
         Vector2 newPos = transform.localPosition;
         newPos.x += enemy.dir.x * enemy.myStats.moveSpd * Time.deltaTime * 10;
         if (newPos.x - bounds[0] < 0 || newPos.x - bounds[1] > 0){
-            //Debug.Log($"newpos x: {newPos.x} bounds: {bounds[0]}, {bounds[1]} ");
             HandleEdge();
         }
         else
             transform.position = newPos;
     }
     void Chase(){
+        myAnim.SetBool(isMoveHash, true);
         Vector2 playerPos = GameManager.GetPlayerPosition();
-        float dist = Vector2.Distance(this.transform.position, playerPos);
-        if (Mathf.Abs(dist) > enemy.attackRange){
-            transform.rotation.SetLookRotation(Vector3.right * Mathf.Sign(dist));
+        if (!enemy.CanAttack){
             Vector2 newPos = transform.position;
             newPos.x += Mathf.Sign((playerPos.x - this.transform.position.x)) * enemy.myStats.moveSpd * 2 * Time.deltaTime * 10;
+            enemy.dir = ((newPos - (Vector2)transform.position) * Vector2.right).normalized;
+            EnsureRotation();
             transform.position = newPos;
         }
         else {

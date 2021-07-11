@@ -60,6 +60,10 @@ public class Enemy : MonoBehaviour
         atkComp.Attack();
     }
 
+    internal Vector2 DirectionToPlayer(){
+        return (GameManager.GetPlayerPosition() - (Vector2)transform.position).normalized;
+    }
+
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, attackRange);
