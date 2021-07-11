@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class EnemyMovement : EnemyBehaviour
 {
-    float patrolRnage = 40f;
-    float patrolWait = 5f;
+    
+    float patrolRnage = 40f;    float patrolWait = 5f;
     float waitTimestamp;
     float[] bounds;
     Action patrolAction;
     internal float heightOffset=0.1f;
     public EnemyMovement(Enemy enemy) : base(enemy)
     {
+        myAnim = enemy.animationModels[(int)EnemyAnimators.Default];
         bounds = new float[2];
         SetBounds();
         waitTimestamp = Time.time;
-        animator.SetBool(isMoveHash, false);
+        myAnim.SetBool(isMoveHash, false);
         patrolAction = Wait;
     }
 
@@ -33,7 +34,7 @@ public class EnemyMovement : EnemyBehaviour
         if (Time.time - waitTimestamp > patrolWait){
             transform.Rotate(Vector3.up, 180);
             enemy.dir *= -1;
-            animator.SetBool(isMoveHash, true);
+            myAnim.SetBool(isMoveHash, true);
             patrolAction = Patrol;
         }
     }
@@ -66,7 +67,7 @@ public class EnemyMovement : EnemyBehaviour
         //Debug.Log("edging");
         waitTimestamp = Time.time;
         patrolAction = Wait;
-        animator.SetBool(isMoveHash, false);
+        myAnim.SetBool(isMoveHash, false);
     }
     void SetBounds(){
         bounds[0] = transform.localPosition.x - patrolRnage;

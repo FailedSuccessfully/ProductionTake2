@@ -8,8 +8,17 @@ public class EnemyObserve : EnemyBehaviour
     {
     }
 
-    public void CheckTarget(){
+    public void DoObserver(){
+        enemy.HasTarget = CheckTarget();
+        enemy.CanAttack = CheckAttack();
+    }
+
+    public bool CheckTarget(){
        RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, enemy.dir, enemy.targetRange, LayerMask.GetMask("Player"));
-       enemy.HasTarget = hit ? true : false;
+       return hit ? true : false;
+    }
+    
+    public bool CheckAttack(){
+        return Vector2.Distance(GameManager.GetPlayerPosition(), enemy.transform.position) <= enemy.attackRange;
     }
 }

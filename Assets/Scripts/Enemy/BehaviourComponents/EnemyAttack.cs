@@ -15,6 +15,7 @@ public class EnemyAttack : EnemyBehaviour
     internal float attackActiveTime = 0.5f;
     public EnemyAttack(Enemy enemy) : base(enemy)
     {
+        myAnim = enemy.animationModels[(int)EnemyAnimators.Attack];
         hurtbox = enemy.hurtbox;
         hbRender = hurtbox.GetComponent<SpriteRenderer>();
         hurtCol = hbRender.color;
