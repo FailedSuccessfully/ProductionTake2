@@ -6,7 +6,8 @@ using UnityEngine;
 public enum EnemyAnimators
 {
     Default,
-    Attack
+    Attack,
+    Death
 }
 
 [RequireComponent(typeof(Collider2D))]
@@ -25,10 +26,11 @@ public class Enemy : MonoBehaviour
     [SerializeReference]
     internal EnemyStats myStats;
     [SerializeField]
-    internal Animator[] animationModels = new Animator[2];
+    internal Animator[] animationModels = new Animator[3];
     private Animator activeAnimation;
     [SerializeField]
     internal BoxCollider2D hurtbox;
+    private bool isDead = false;
 
     internal void AnimationSwitch(EnemyAnimators attack)
     {
@@ -55,10 +57,8 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(dir);
-        moveComp.Move();
-        obsComp.DoObserver();
-        atkComp.Attack();
+        if (!isDead)
+            onUpdate();
     }
 
     internal Vector2 DirectionToPlayer(){
@@ -70,5 +70,17 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, targetRange);
+    }
+
+    public void Die(){
+        isDead = true;
+        AnimationSwitch(EnemyAnimators.Death);
+    }
+
+    void onUpdate(){
+        //Debug.Log(dir);
+        moveComp.Move();
+        obsComp.DoObserver();
+        atkComp.Attack();
     }
 }

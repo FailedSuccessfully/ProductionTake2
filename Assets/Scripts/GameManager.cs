@@ -31,8 +31,9 @@ public class GameManager : MonoBehaviour
     }
 
     public static void HandleEnemyDeath(Enemy enemy){
+        //Debug.Log("dead'nt");
         ((PlayerBoost)player.compDict[typeof(PlayerBoost)]).AddBoost(enemy.boostOnKill);
-        GameObject.Destroy(enemy.gameObject);
+        enemy.Die();
     }
 
     public static void SetCheckpoint(Checkpoint point){
