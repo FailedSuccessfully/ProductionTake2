@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 484005711556882221}
   - component: {fileID: 5068159705544645994}
   - component: {fileID: 146397038943474307}
-  - component: {fileID: 3125741773070834205}
+  - component: {fileID: 2378620023257958387}
+  - component: {fileID: 8544830550203020648}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4549900984454496310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -123.027916, y: 42.455, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 2}
+  m_LocalScale: {x: 7, y: 6, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: aae8df524e2c21340884fa85d84ad3d2, type: 3}
+  m_Color: {r: 0.73983914, g: 0.49483803, b: 0.754717, a: 0.35686275}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -96,8 +97,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afaac8f23c406d43bc96f7d7a6a9fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!58 &3125741773070834205
-CircleCollider2D:
+--- !u!95 &2378620023257958387
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549900984454496310}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9e9f66da6c34a1a40b3c49362c42eb51, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!70 &8544830550203020648
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,6 +129,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2
+  m_Offset: {x: 0.0000001362392, y: -1.0173454}
+  m_Size: {x: 2.0064876, y: 5.0445023}
+  m_Direction: 0
