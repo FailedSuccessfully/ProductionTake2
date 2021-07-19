@@ -4,11 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayAnimStates
+{
+    Idle,
+    Walk,
+    Run
+}
+
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
     #region Fields
     Rigidbody2D rb;
+    Animator anim;
     internal Dictionary<Type, PlayerComponent> compDict = new Dictionary<Type, PlayerComponent>();
     internal InputActionMap inputs;
     PhysicsMaterial2D pm;
@@ -43,6 +51,7 @@ public class Player : MonoBehaviour
     }
     private void Start() {
             rb = GetComponent<Rigidbody2D>();
+            anim = GetComponentInChildren<Animator>();
             rb.gravityScale = myStats.playerGravity;
             InputInit();
         }
@@ -53,7 +62,39 @@ public class Player : MonoBehaviour
                 component.ComponentAction?.Invoke();
             }
         }
-    
+        private void Update() {
+            AnimationSelect();
+        }
+
+    private void AnimationSelect()
+    {
+        int select;
+        float velX = Mathf.Abs(rb.velocity.x);
+        
+        switch(velX){
+
+            case float x when x > myStats.runThreshold:
+            {
+                select = 2;
+                break;
+            }
+            case float x when x > 0.1f:
+            {
+                select  = 1;
+                anim.speed = Mathf.Clamp(velX / myStats.runThreshold, 0f, 1f);
+                break;
+            }
+            default:
+            {
+                anim.speed = 1;
+                select = 0;
+                break;
+            }
+        }
+        Debug.Log($"select is {select}");
+        anim.SetInteger("AnimState", select);
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
         

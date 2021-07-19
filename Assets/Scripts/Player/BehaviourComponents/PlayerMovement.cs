@@ -17,6 +17,7 @@ public class PlayerMovement : PlayerComponent
     {
         myDirection = Vector2.zero;
         ComponentAction += ChangeVelocity;
+        ComponentAction += EnsureRotation;
     }
     public override void AcceptInput(InputAction.CallbackContext value){
         myDirection = value.ReadValue<Vector2>().normalized;
@@ -50,6 +51,10 @@ public class PlayerMovement : PlayerComponent
         // Scale to mass
         force *= rigidbody.mass;
         rigidbody.AddForce(force);
+    }
+    void EnsureRotation(){
+        if (myDirection != Vector2.zero)
+            transform.GetComponentInChildren<Animator>().transform.rotation = myDirection == Vector2.left ? Quaternion.AngleAxis(0, Vector3.up) : Quaternion.AngleAxis(180, Vector3.up);
     }
 
 }
