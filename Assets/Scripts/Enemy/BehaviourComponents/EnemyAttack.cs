@@ -44,7 +44,7 @@ public class EnemyAttack : EnemyBehaviour
 
     void DoAttack(){
         if(hurtbox.IsTouchingLayers(LayerMask.GetMask("Player"))){
-            //GameManager.RespawnPlayer();
+            GameManager.RespawnPlayer();
         }
     }
 

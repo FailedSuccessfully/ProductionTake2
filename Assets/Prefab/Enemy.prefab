@@ -107,8 +107,8 @@ MonoBehaviour:
   - {fileID: 9104164606042064576}
   - {fileID: 7624031021620446931}
   m_Bounds:
-    m_Center: {x: -34.871002, y: 16.488256, z: 0}
-    m_Extent: {x: 4.514819, y: 5.7349987, z: 0}
+    m_Center: {x: -34.871033, y: 16.48825, z: 0}
+    m_Extent: {x: 4.514804, y: 5.7350006, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &433831062056898040
@@ -426,8 +426,8 @@ MonoBehaviour:
   - {fileID: 1339707926196472131}
   - {fileID: 9104164606042064576}
   m_Bounds:
-    m_Center: {x: -0.0007684231, y: -0.0000038146973, z: 0}
-    m_Extent: {x: 3.3508894, y: 14.390001, z: 0}
+    m_Center: {x: -0.0007684231, y: -0.000030517578, z: 0}
+    m_Extent: {x: 3.3508894, y: 14.389967, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &2442467515685058028
@@ -756,7 +756,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 7782235630237098997}
   m_Bounds:
-    m_Center: {x: 0.00000011920929, y: 0.0016680658, z: 0}
+    m_Center: {x: 0.0009766817, y: 0.0016795099, z: 0}
     m_Extent: {x: 1.47, y: 0.44832015, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1208,6 +1208,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 812445440628777723}
     m_Modifications:
+    - target: {fileID: 1665648751694343619, guid: a387411d2a577234980c8bc7636a3fd7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5660392381395073789, guid: a387411d2a577234980c8bc7636a3fd7, type: 3}
       propertyPath: m_Name
       value: Hurtbox

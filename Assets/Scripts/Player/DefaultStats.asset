@@ -19,7 +19,7 @@ MonoBehaviour:
   deceleration: 400
   jumpForce: 13
   dashForce: 700
-  boostForce: 10
+  boostForce: 12
   dashCooldown: 1
   dashDuration: 0.2
   wallGrind: 7.5
