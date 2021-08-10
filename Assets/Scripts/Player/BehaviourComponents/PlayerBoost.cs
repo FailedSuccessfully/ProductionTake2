@@ -44,7 +44,7 @@ public class PlayerBoost : PlayerComponent
         rigidbody.constraints = rigidbody.constraints ^ RigidbodyConstraints2D.FreezePosition;
 
         // apply force
-        rigidbody.AddForce(dir.normalized * Mathf.Pow(boostForce, 2f) * rigidbody.mass, ForceMode2D.Impulse);
+        rigidbody.AddForce(dir.normalized * Mathf.Pow(boostForce, 2f)* player.myStats.playerGravity, ForceMode2D.Impulse);
         ComponentAction-= ApplyForce;
     }
 
