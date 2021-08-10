@@ -14,6 +14,8 @@ public class PlayerShoot : PlayerComponent
 
     public override void AcceptInput(InputAction.CallbackContext value)
     {
+        if (value.started)
+            player.anim.SetBool("ShotHandler", true);
         if (value.performed){
             Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             dir = MousePos - (Vector2)transform.position;
@@ -26,12 +28,12 @@ public class PlayerShoot : PlayerComponent
                 }
             }
             ComponentAction += ApplyShot;
+            player.anim.SetBool("ShotHandler", false);
         }
     }
 
     void ApplyShot(){
-        PelletController pellet = GameObject.Instantiate(shot);
-        pellet.transform.position =  transform.position;
+        PelletController pellet = GameObject.Instantiate(shot, player.shotRlease.position, Quaternion.identity);
         pellet.movement = dir.normalized;
         ComponentAction -= ApplyShot;
     }

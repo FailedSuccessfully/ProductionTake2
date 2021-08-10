@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 {
     #region Fields
     Rigidbody2D rb;
-    Animator anim;
+    internal Animator anim;
     internal Dictionary<Type, PlayerComponent> compDict = new Dictionary<Type, PlayerComponent>();
     internal InputActionMap inputs;
     PhysicsMaterial2D pm;
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public float boostMeter => ((PlayerBoost)compDict[typeof(PlayerBoost)]).curBoostMeter;
     protected internal Vector2 direction => ((PlayerMovement)compDict[typeof(PlayerMovement)]).myDirection;
     protected internal Vector2 lastDirectionalInput;
+    public Transform shotRlease;
     #endregion
     
     #region UrsulaFields
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour
                 break;
             }
         }
-        Debug.Log($"select is {select}");
+        //Debug.Log($"select is {select}");
         anim.SetInteger("AnimState", select);
     }
 

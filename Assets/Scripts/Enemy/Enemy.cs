@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour
     {
         if (!isDead)
             onUpdate();
+        
     }
 
     internal Vector2 DirectionToPlayer(){
